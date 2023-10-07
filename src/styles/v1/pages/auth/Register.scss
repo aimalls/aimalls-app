@@ -1,0 +1,69 @@
+#register {
+    background: url('../../../assets/images/coins-left.png') top left no-repeat,
+    url('../../../assets/images/coins-right.png') top right no-repeat;
+    background-position: top left, top 15% right 0;
+    ion-header {
+        box-shadow: none;
+        border: none;
+        ion-toolbar {
+            --background: 'none';
+            ion-button {
+               --color: var(--ion-color-primary-shade);
+               text-transform: none;
+               font-weight: bold;
+               font-size: 1rem;
+            }
+        }
+    }
+    ion-content {
+        --background: 'none';
+        
+    }
+    ion-grid {
+        padding: 0px 5%;
+        ion-col.page-title {
+            font-size: 35px;
+        }
+        ion-col.form {
+            ion-input {
+                margin: 10px 0px;
+            }
+        }
+        
+        ion-col.form-button {
+            ion-button {
+                --background: var(--ion-color-gradient);
+                height: 40px;
+                span {
+                    color: #FFF;
+                    font-weight: bold;
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}
+
+#register-success {
+    // background: url('../../../assets/images/robot-yellow-circle-bg.png') top right no-repeat, #FFF;
+    // background-size: 45%;
+    ion-content {
+        --background: rgb(222,9,4);
+        --background: linear-gradient(41deg, rgba(222,9,4,1) 0%, rgba(252,154,20,1) 85%);
+        ion-grid {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            ion-col.form-button {
+                ion-button {
+                    --background: var(--ion-color-gradient);
+                    span {
+                        color: #FFF;
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,50 @@
+#dashboard {
+    &::before {
+        content: '';
+        position: absolute;
+        width: 200%;
+        height: 30%;
+        left: -50%;
+        top: -15%;
+        transform: rotate(150deg);
+        background: #F00;
+        background-size: 100% 20%;
+        background-position: left 0.75em, right 2em;
+        background-repeat: no-repeat;
+        z-index: -1;
+    }
+    &::after {
+        content: '';
+        position: absolute;
+        width: 200%;
+        height: 200px;
+        left: -40%;
+        top: -20%;
+        transform: rotate(50deg);
+        background: var(--ion-color-primary);
+        background-size: 100% 20%;
+        background-position: left 0.75em, right 2em;
+        background-repeat: no-repeat;
+        z-index: -2;
+    }
+    ion-content {
+        --background: none;
+        ion-grid ion-col {
+            // padding: 0px;
+        }
+        .orders-card {
+            padding-bottom: 0px;
+            ion-grid {
+                ion-row {
+                    ion-col {
+                        display: flex;
+                        flex-direction: column;
+                        div {
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

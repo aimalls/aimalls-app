@@ -1,0 +1,12 @@
+#add-new-product {
+    .form {
+        ion-card-title {
+            font-size: .8rem;
+        }
+        .placeholder-button {
+            border: thin dashed var(--ion-color-primary);
+            width: 50px;
+            height: 50px;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+#dashboard-layout {
+    ion-footer#dashboard-tab-menu {
+        ion-tab-bar {
+            overflow:visible;
+            width: 100%;
+            align-self: end;
+            --background: #1E110E;
+            --border: none;
+            --color: rgb(158, 158, 158);
+            contain: none;
+            ion-tab-button.tab-selected {
+                transform: translateY(-50%);
+                position: relative;
+                width: 60px;
+                ion-icon {
+                    background: #1E110E;
+                    padding: 7px;
+                    border-radius: 50%;
+                }
+                &::part(native) {
+                    overflow: visible;
+                    &::before, &::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                    }
+                    &::before {
+                        background: #FFF;
+                        background-repeat: no-repeat;
+                        height: 60px;
+                        width: 60px;
+                        border-radius: 50%;
+                    }
+                    
+                }
+                // background: rgb(158, 158, 158) !important;
+            }
+        }
+    }
+}

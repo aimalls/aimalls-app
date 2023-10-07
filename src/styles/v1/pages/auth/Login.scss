@@ -1,0 +1,46 @@
+#login {
+    background: url('../../../../assets/images/coins-left.png') top left no-repeat,
+    url('../../../../assets/images/coins-right.png') top right no-repeat;
+    background-position: top left, top 15% right 0;
+    ion-header {
+        box-shadow: none;
+        border: none;
+        ion-toolbar {
+            --background: 'none';
+            ion-button {
+               --color: var(--ion-color-primary-shade);
+               text-transform: none;
+               font-weight: bold;
+               font-size: 1rem;
+            }
+        }
+    }
+    ion-content {
+        --background: 'none';
+        
+    }
+    ion-grid {
+        padding: 0px 5%;
+        ion-col.page-title {
+            font-size: 35px;
+        }
+        ion-col.form {
+            padding-top: 50px;
+            ion-input {
+                margin: 10px 0px;
+            }
+        }
+        
+        ion-col.form-button {
+            ion-button {
+                --background: var(--ion-color-gradient);
+                height: 40px;
+                span {
+                    color: #FFF;
+                    font-weight: bold;
+                    font-size: 15px;
+                }
+            }
+        }
+    }
+}

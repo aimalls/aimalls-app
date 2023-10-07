@@ -1,0 +1,38 @@
+.dashboard-navigation-content{
+    .logo-wrap{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+    .dashboard-navigation-link{
+        font-family: 'WorkSans-Regular', Courier, monospace;
+    }
+}
+ion-menu::part(container) {
+    --background: #1f110e;
+    padding: 10px;
+}
+ion-list#dashboard-list-menu {
+    ion-item::part(native) {
+        border: none;
+        background: none;
+        color: #FFF
+    }
+    ion-item.active::part(native) {
+        background: #615654;
+        color: var(--ion-color-primary);
+        position: relative;
+        border-radius: 5px;
+        
+    }
+    ion-item:not(.active) {
+        z-index: 1000;
+    }
+    ion-item.active {
+        overflow: visible;
+    }
+    ion-item::part(detail-icon) {
+        color: #FFF;
+    }
+}

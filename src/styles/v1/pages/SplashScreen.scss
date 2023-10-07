@@ -1,0 +1,41 @@
+#splash-screen {
+    background: url('../../../assets/images/splash-bg.JPEG') center left no-repeat, #FF0000;
+    background-size: cover;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba($color: #FF0000, $alpha: 0.5);
+    }
+
+    ion-content {
+        --background: none;
+
+        .container {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            .auth-buttons {
+                display: flex;
+                flex-direction: column;
+                margin-top: 100px;
+            }
+
+            .greetings {
+                text-align: center;
+                color: #FFF;
+                font-weight: bold;
+                font-size: 1.5rem;
+            }
+
+            img {
+                max-width: 150px;
+            }
+        }
+    }
+}
