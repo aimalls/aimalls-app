@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar, useIonAlert, useIonLoading, useIonToast } from "@ionic/react";
 import { FC, useMemo, useState } from "react";
 import "../../styles/v1/pages/products/AddNewProduct.scss"
 import { arrowDown, chevronDown, image } from "ionicons/icons";
@@ -10,6 +10,7 @@ import ProductSpecificationSetter from "../../components/ProductSpecificationSet
 import { SalesInformation, iProductWholeSalePriceTier, iVariation } from "./components/SalesInformation";
 import { ShippingInfo } from "./components/ShippingInfo";
 import { OtherProductInfo } from "./components/OtherProductInfo";
+import { saveNewProductToAPI } from "../../requests/product.request";
 
 export interface iProductImages {
     images: File[],
@@ -20,36 +21,81 @@ type spec = { [key: string]: string }
 export interface iProductSalesInfo {
     price: string,
     stock: string,
-    variations: iVariation[] | undefined,
+    variations: iVariation[],
     productWholeSalePriceTiers: iProductWholeSalePriceTier[] | undefined
+}
+
+export interface iProductShippingInfo {
+    weight: number,
+    height: number,
+    width: number,
+    length: number
 }
 
 export const AddNewProduct: FC = () => {
 
     const { productCategories, parentCategories } = useProductCategory();
 
+    const [presentAlert] = useIonAlert();
+    const [present, dismiss] = useIonLoading();
+    const [presentToast] = useIonToast();
+
     const [productImages, setProductImages] = useState<iProductImages>()
+
+    const [productName, setProductName] = useState("");
+    const [productDescription, setProductDescription] = useState("");
+    
     const [selectedCategory, setSelectedCategory] = useState<iProductCategory | iProductCategoryExtended>()
     const [productSpecification, setProductSpecification] = useState<spec>({})
-    const [productSalesInfo, setProductSalesInfo] = useState<iProductSalesInfo>()
+    const [productSalesInfo, setProductSalesInfo] = useState<iProductSalesInfo>({
+        price: "",
+        stock: "",
+        variations: [],
+        productWholeSalePriceTiers: []
+    })
+    const [otherProductInfo, setOtherProductInfo] = useState("");
+    const [shippingInfo, setShippingInfo] = useState<iProductShippingInfo>({
+        weight: 0,
+        height: 0,
+        width: 0,
+        length: 0
+    })
     
 
-    const handleAddNewProduct = () => {
+    const handleAddNewProduct = async () => {
         let params = {
             images: productImages,
-            selectedCategory,
-            productSpecification,
-            productSalesInfo
+            productSalesInfo,
+            otherParams: JSON.stringify({
+                productName,
+                productDescription,
+                selectedCategory: selectedCategory?._id,
+                productSpecification,
+                productSalesInfo,
+                otherProductInfo,
+                shippingInfo
+            })        
         }
 
-        console.log(params)
-        // console.log(selectedCategoryHistory)
+        try {
+            await present();
+            
+            const result = await saveNewProductToAPI(params)
+            
+            await presentToast(result.message, 5000);
+
+        } catch (err: any) {
+            presentAlert(err.response.data.message)
+        } finally {
+            await dismiss();
+        }
     }
 
     const handleSalesInfoDone = (salesInfo: iProductSalesInfo) => {
         console.log(salesInfo)
         setProductSalesInfo(salesInfo)
     }
+    
 
     return (
         <IonPage id="add-new-product">
@@ -71,6 +117,8 @@ export const AddNewProduct: FC = () => {
                 </IonCard>
                 <IonCard style={{ padding: '0px 20px' }}>
                     <IonInput 
+                        value={productName}
+                        onIonInput={(event) => setProductName(event.detail.value!)}
                         type="text" 
                         label="Product Name" 
                         labelPlacement="floating" 
@@ -80,6 +128,8 @@ export const AddNewProduct: FC = () => {
                 </IonCard>
                 <IonCard style={{ padding: '0px 20px' }}>
                     <IonInput 
+                        value={productDescription}
+                        onIonInput={(event) => setProductDescription(event.detail.value!)}
                         type="text" 
                         label="Description" 
                         labelPlacement="floating" 
@@ -94,15 +144,15 @@ export const AddNewProduct: FC = () => {
                     <ProductSpecificationSetter onChange={(spec) => setProductSpecification(spec)} productCategory={selectedCategory} />
                 </IonCard>
                 <IonCard>
-                    <SalesInformation onDone={(price, stock, variations, productWholeSalePriceTiers) => handleSalesInfoDone({
+                    <SalesInformation productSalesInfo={productSalesInfo} onDone={(price, stock, variations, productWholeSalePriceTiers) => handleSalesInfoDone({
                         price, stock, variations, productWholeSalePriceTiers
                     })} />
                 </IonCard>
                 <IonCard>
-                    <ShippingInfo />
+                    <ShippingInfo shippingInfo={shippingInfo} onDone={(value) => setShippingInfo(value)} />
                 </IonCard>
                 <IonCard>
-                    <OtherProductInfo />
+                    <OtherProductInfo onDone={(value) => setOtherProductInfo(value)} otherProductInfo={otherProductInfo} />
                 </IonCard>
 
                 <IonGrid>

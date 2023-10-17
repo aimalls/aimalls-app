@@ -49,9 +49,6 @@ export const AccountProfile: FC<iProps> = (props): JSX.Element => {
 
 
     const onDOBChange = (value: any) => {
-        // console.log(value)
-        // const formattedDate = format(parseISO(value), "MM/dd/yyyy")
-        // console.log(formattedDate)
         dispatch(SET_DOB(value))
     }
 

@@ -15,7 +15,7 @@ import { store } from './store'
 root.render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <Provider store={store}>
             <App />
         </Provider>

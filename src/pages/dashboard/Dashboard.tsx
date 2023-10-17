@@ -6,10 +6,18 @@ import "../../styles/v1/pages/dashboard/Dashboard.scss"
 
 import logoRobot from "../../assets/images/logo-robot.png"
 import { add, addCircle, addCircleOutline, apps, basket, buildOutline, card, chevronForward, list, location, megaphone, megaphoneOutline, notifications, pencil, settings, walletOutline } from "ionicons/icons";
+import { useAccountProfile } from "../../hooks/account-profile/useAccountProfile";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 export const Dashboard: FC<iProps> = (props): JSX.Element => {
     const navigation = useHistory();
     const [present, dismiss] = useIonLoading();
     const [presentAlert] = useIonAlert();
+
+    const accountProfile = useAccountProfile();
+
+    const { name } = useSelector((state: RootState) => state.accountProfileStore)
+    
     return (
         <IonPage id="dashboard">
             <IonContent>
@@ -29,13 +37,14 @@ export const Dashboard: FC<iProps> = (props): JSX.Element => {
                                             <img src={logoRobot} />
                                         </IonAvatar>
                                         <div style={{ padding: '0px 10px' }}>
-                                            <div className="shop-name" style={{ fontWeight: 'bold' }}>Jawels Shop</div>
-                                            <div style={{ fontSize: '12px' }}>Followers: 10.2M</div>
+                                            
+                                            <div className="shop-name" style={{ fontWeight: 'bold' }}>{ name.first_name }'s Shop</div>
+                                            {/* <div style={{ fontSize: '12px' }}>Followers: 10.2M</div> */}
                                         </div>
                                     </div>
 
                                     <div>
-                                        <IonButton color={"dark"} size="small" fill="clear">
+                                        <IonButton color={"dark"} size="small" fill="clear" routerLink="account-settings/profile">
                                             <IonLabel slot="start" style={{ fontWeight: 'bold' }}>Edit Profile</IonLabel>
                                             <IonIcon slot="end" size="small" icon={pencil}></IonIcon>
                                         </IonButton>

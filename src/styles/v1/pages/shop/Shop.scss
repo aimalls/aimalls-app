@@ -1,0 +1,60 @@
+#shop {
+    background: rgb(255,255,255);
+    background: linear-gradient(0deg, rgba(255,255,255,1) 85%, rgba(240,143,141,1) 95%, rgba(222,9,4,1) 100%);
+
+    ion-header {
+        --background: none;
+        padding: 10px 0px;
+        ion-toolbar {
+            --background: none;
+            .search-btn {
+                width: 95%;
+                height: 35px;
+                background: #FFF;
+                margin: 0px 2.5%;
+                display: flex;
+                padding: 5px;
+                align-items: center;
+                justify-content: space-between;
+                ion-icon {
+                    font-size: 25px;
+                }
+            }
+        }
+    }
+    ion-content {
+        --background: none;
+        ion-grid ion-col {
+            // padding: 0px;
+        }
+        .product-name {
+            padding: 10px;
+        }
+        .product-price {
+            padding: 10px;
+            color: var(--ion-color-secondary);
+            font-weight: bold;
+        }
+        .orders-card {
+            padding-bottom: 0px;
+            ion-grid {
+                ion-row {
+                    ion-col {
+                        display: flex;
+                        flex-direction: column;
+                        div {
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    ion-footer {
+        ion-toolbar {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}

@@ -1,19 +1,38 @@
-import { IonButton, IonLabel, IonIcon, IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol, IonGrid, IonInput } from "@ionic/react"
+import { IonButton, IonLabel, IonIcon, IonModal, IonHeader, IonToolbar, IonTitle, IonContent, IonRow, IonCol, IonGrid, IonInput, IonList, IonListHeader, IonItem } from "@ionic/react"
 import { chevronDown } from "ionicons/icons"
 import { FC, useState } from "react"
 
 import "../../../styles/v1/pages/products/components/ShippingInfo.scss"
+import { iProductShippingInfo } from "../AddNewProduct"
 
-export interface iShippingInfo {
-    
+
+
+export interface iShippingInfoProps{
+    shippingInfo: iProductShippingInfo,
+    onDone: (shippingInfo: iProductShippingInfo) => void
 }
 
-export const ShippingInfo: FC<iShippingInfo> = () => {
+export const ShippingInfo: FC<iShippingInfoProps> = ({ onDone, shippingInfo }) => {
 
     const [isShippingInfoDialogOpen, setIsShippingInfoDialogOpen]  = useState(false);
+    const [formShippingInfo, setFormShippingInfo] = useState<iProductShippingInfo>({
+        weight: 0,
+        height: 0,
+        width: 0,
+        length: 0
+    })
+
+    const handleShippingInfoChange = <Key extends keyof iProductShippingInfo>(key: Key, value: iProductShippingInfo[Key]) => {
+        setFormShippingInfo(curr => {
+            let current = {...curr};
+            current[key as keyof typeof curr] = value;
+            return current;
+        })
+    }
 
     const handleShippingInfoDone = () => {
-
+        onDone(formShippingInfo)
+        setIsShippingInfoDialogOpen(false)
     }
 
     return (
@@ -33,41 +52,51 @@ export const ShippingInfo: FC<iShippingInfo> = () => {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent>
-                    <IonGrid>
-                        <IonRow>
-                            <IonCol size="12">
-                                <IonInput
-                                    type="number"
-                                    label="Weight"
-                                    labelPlacement="floating"
-                                ></IonInput>
-                            </IonCol>
-                            <IonCol size="12">
-                                <IonLabel>Parcel Size</IonLabel>
-                            </IonCol>
-                            <IonCol size="12">
-                                <IonInput
-                                    type="number"
-                                    label="Width"
-                                    labelPlacement="floating"
-                                ></IonInput>
-                            </IonCol>
-                            <IonCol size="12">
-                                <IonInput
-                                    type="number"
-                                    label="Length"
-                                    labelPlacement="floating"
-                                ></IonInput>
-                            </IonCol>
-                            <IonCol size="12">
-                                <IonInput
-                                    type="number"
-                                    label="Height"
-                                    labelPlacement="floating"
-                                ></IonInput>
-                            </IonCol>
-                        </IonRow>
-                    </IonGrid> 
+                    <IonList lines="full">
+                        <IonListHeader>
+                            Parcel Weight
+                        </IonListHeader>
+                        <IonItem>
+                            <IonInput
+                                value={formShippingInfo.weight}
+                                type="number"
+                                label="Weight (KG)"
+                                labelPlacement="floating"
+                                onIonInput={(event) => handleShippingInfoChange("weight", +event.detail.value!)}
+                            ></IonInput>
+                        </IonItem>
+                        <IonListHeader>
+                            Parcel Size
+                        </IonListHeader>
+                        <IonItem>
+                            <IonInput
+                                value={formShippingInfo.width}
+                                type="number"
+                                label="Width (cm)"
+                                labelPlacement="floating"
+                                onIonInput={(event) => handleShippingInfoChange("width", +event.detail.value!)}
+                            ></IonInput>
+                        </IonItem>
+                        <IonItem>
+                            <IonInput
+                                value={formShippingInfo.length}
+                                type="number"
+                                label="Length (cm)"
+                                labelPlacement="floating"
+                                onIonInput={(event) => handleShippingInfoChange("length", +event.detail.value!)}
+                            ></IonInput>
+                        </IonItem>
+                        <IonItem>
+                            <IonInput
+                                value={formShippingInfo.height}
+                                type="number"
+                                label="Height (cm)"
+                                labelPlacement="floating"
+                                onIonInput={(event) => handleShippingInfoChange("height", +event.detail.value!)}
+                            ></IonInput>
+                        </IonItem>
+                    </IonList>
+                    
                 </IonContent>
             </IonModal>
         </div>

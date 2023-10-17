@@ -9,6 +9,9 @@ import SetName from "../pages/account-settings/account-profile/SetName"
 import SetPhoneNumber from "../pages/account-settings/account-profile/SetPhoneNumber"
 import Addresses from "../pages/account-settings/addresses/Addresses"
 import AddNewAddress from "../pages/account-settings/addresses/AddNewAddress"
+import { UpdateProduct } from "../pages/products/UpdateProduct"
+import Shop from "../pages/shop/Shop"
+import ShopSearch from "../pages/shop/ShopSearch"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
@@ -25,6 +28,12 @@ export const PrivateRoutes = () => {
             <Route path="/products/new">
                 <AddNewProduct />
             </Route>
+            <Route path="/products/:id/update">
+                <UpdateProduct />
+            </Route>
+            
+
+            
 
             <Route path="/account-settings">
                 <AccountSetting />
@@ -45,6 +54,16 @@ export const PrivateRoutes = () => {
             </Route>
             <Route path="/account-settings/addresses/add-new">
                 <AddNewAddress />
+            </Route>
+
+            <Route path="/shop">
+                <Shop />
+            </Route>
+            <Route path="/shop/search">
+                <ShopSearch />
+            </Route>
+            <Route path="/shop/search/:search_string">
+                <Shop />
             </Route>
 
         </UserContextProvider>

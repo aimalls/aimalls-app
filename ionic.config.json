@@ -1,5 +1,7 @@
 {
   "name": "aimalls-app",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "react-vite"
 }

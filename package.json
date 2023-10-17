@@ -12,6 +12,12 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@capacitor/android": "^5.5.0",
+    "@capacitor/app": "5.0.6",
+    "@capacitor/core": "5.5.0",
+    "@capacitor/haptics": "5.0.6",
+    "@capacitor/keyboard": "5.0.6",
+    "@capacitor/status-bar": "5.0.6",
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
     "@reduxjs/toolkit": "^1.9.7",
@@ -31,6 +37,7 @@
     "usehooks-ts": "^2.9.1"
   },
   "devDependencies": {
+    "@capacitor/cli": "5.5.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",

@@ -4,10 +4,12 @@ import { IonButton, IonLabel, IonIcon, IonModal, IonHeader, IonToolbar, IonTitle
 import { chevronDown } from "ionicons/icons"
 import VariationForm from "./ProductVariationForm"
 import { ProductWholesalePriceTierForm } from "./ProductWholesalePriceTierForm"
+import { iProductSalesInfo } from "../AddNewProduct"
 
 
 interface iSalesInformationProps {
-    onDone: (price: string, stock: string, variations?: iVariation[], productWholeSalePriceTiers?: iProductWholeSalePriceTier[] ) => void
+    productSalesInfo?: iProductSalesInfo,
+    onDone: (price: string, stock: string, variations: iVariation[], productWholeSalePriceTiers?: iProductWholeSalePriceTier[] ) => void
 }
 
 export interface iVariation {
@@ -33,16 +35,16 @@ export interface iProductWholeSalePriceTier {
 }
 
 
-export const SalesInformation: FC<iSalesInformationProps> = ({ onDone }) => {
+export const SalesInformation: FC<iSalesInformationProps> = ({ onDone, productSalesInfo }) => {
 
     const [isSalesInfoDialogOpen, setIsSalesInfoDialogOpen] = useState(false);
     const [variationsEnabled, setVariationsEnabled] = useState(false);
     const [wholeSalePriceEnabled, setWholeSalePriceEnabled] = useState(false);
 
-    const [variations, setVariations] = useState<iVariation[]>([])
+    const [variations, setVariations] = useState<iVariation[]>(productSalesInfo!.variations)
 
-    const [productPrice, setProductPrice] = useState<string>("")
-    const [productStock, setProductStock] = useState<string>("")
+    const [productPrice, setProductPrice] = useState<string>(productSalesInfo!.price)
+    const [productStock, setProductStock] = useState<string>(productSalesInfo!.stock)
 
     const makeid = (length: number) => {
         let result = '';
@@ -295,6 +297,7 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone }) => {
                                 ): (
                                     <IonCol>
                                         <IonInput
+                                            value={productPrice}
                                             type="number"
                                             label="Price *"
                                             labelPlacement="floating"
@@ -303,6 +306,7 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone }) => {
                                             onIonInput={({detail}) => setProductPrice(detail.value!)}
                                         ></IonInput>
                                         <IonInput
+                                            value={productStock}
                                             type="number"
                                             label="Stock *"
                                             labelPlacement="floating"

@@ -1,13 +1,15 @@
 import { FC, useEffect, useState } from "react";
-import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow, useIonAlert, useIonLoading, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonList, IonListHeader, IonItem, IonInput, IonSelect, IonSelectOption, IonLabel, IonToggle } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow, useIonAlert, useIonLoading, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonList, IonListHeader, IonItem, IonInput, IonSelect, IonSelectOption, IonLabel, IonToggle, useIonToast } from "@ionic/react";
 import { useHistory } from "react-router";
 import useAddressSelector, { iBarangay, iCity, iProvince, iRegion } from "../../../hooks/address/useAddressSelector";
 import { iVariation } from "../../products/components/SalesInformation";
+import { saveNewUserAddress } from "../../../requests/user-address.request";
 export interface iProps {}
 export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
     const navigation = useHistory();
     const [present, dismiss] = useIonLoading();
     const [presentAlert] = useIonAlert();
+    const [presentToast] = useIonToast();
 
     const { 
         regionOptions, loadProvinces,
@@ -28,7 +30,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
         city: iCity,
         barangay: iBarangay,
         postalCode: string,
-        street_building_house: string
+        streetBuildingHouse: string
     }
     const [address, setAddress] = useState<iAddress>({
         region: {} as iRegion,
@@ -36,7 +38,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
         city: {} as iCity,
         barangay: {} as iBarangay,
         postalCode: "",
-        street_building_house: ""
+        streetBuildingHouse: ""
     })
 
     const [settings, setSettings] = useState({
@@ -110,14 +112,25 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
         })
     }
 
-    const handleAddressSave = () => {
+    const handleAddressSave = async () => {
         let params = {
             contact,
             address,
             settings
         }
-        console.log(params)
-        navigation.replace("/account-settings/addresses")
+
+        try {
+            await present();
+            const result = await saveNewUserAddress(params);
+            await presentToast(result.message, 4000)
+            navigation.replace("/account-settings/addresses")
+        } catch (err: any) {
+            presentAlert(err.response.data.message)
+        } finally {
+            await dismiss();
+        }
+
+        
     }
 
     return (
@@ -233,8 +246,8 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             placeholder="Stree Name, Bldg., House #."
                             label="Stree Name, Bldg., House #."
                             labelPlacement="floating"
-                            value={address.street_building_house}
-                            onIonInput={(e) => handleAddressChange("street_building_house", e.detail.value!)}
+                            value={address.streetBuildingHouse}
+                            onIonInput={(e) => handleAddressChange("streetBuildingHouse", e.detail.value!)}
                         />
                     </IonItem>
                 </IonList>

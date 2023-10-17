@@ -22,4 +22,9 @@ export const useAccountProfile = () => {
             dispatch(SET_PHONE(AccountProfile.phone))
         }
     }, [AccountProfile])
+
+    return {
+        AccountProfile,
+        AccountProfileIsLoading
+    }
 }
