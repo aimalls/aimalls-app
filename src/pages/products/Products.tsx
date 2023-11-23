@@ -38,7 +38,7 @@ export const Products: React.FC = () => {
                                         </IonAvatar>
                                         <IonLabel>
                                             { product.productName }
-                                            <p>{ product.category.name }</p>
+                                            <p>{ product.category ? product.category.name : null }</p>
                                         </IonLabel>
                                     </IonItem>
                                     <IonItemOptions>

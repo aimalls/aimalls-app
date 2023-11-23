@@ -57,7 +57,7 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
             <IonContent>
                 <IonGrid>
                     <IonRow>
-                        { productSearchResult && !isProductSearchResultLoading ? (
+                        { productSearchResult && productSearchResult.length !==0  && !isProductSearchResultLoading ? (
                             productSearchResult.map((product) => (
                                 <IonCol size="6" key={product._id}>
                                     <IonCard style={{ height: '100%' }}>

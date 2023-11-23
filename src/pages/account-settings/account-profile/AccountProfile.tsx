@@ -109,7 +109,7 @@ export const AccountProfile: FC<iProps> = (props): JSX.Element => {
                                 showDefaultButtons 
                                 id="dob" 
                                 presentation="date" 
-                                value={new Date(dob === "" ? `01/01/2001 15:00:00` : `${dob}`).toISOString()}
+                                value={new Date(dob === "" || dob === null ? `01/01/2001 15:00:00` : `${dob}`).toISOString()}
                                 onIonChange={(e) => onDOBChange(e.detail.value!)}
                             ></IonDatetime>
                         </IonModal>

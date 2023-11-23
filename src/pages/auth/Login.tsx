@@ -41,7 +41,7 @@ export const Login: FC<iProps> = (props): JSX.Element => {
             setAuthToken(result.data.authToken)
             navigation.push("/dashboard")
         } catch (error: any) {
-            presentAlert(error)
+            presentAlert(error.response.data)
         } finally {
             await dismiss();
         }

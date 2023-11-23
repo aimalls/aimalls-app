@@ -11,6 +11,7 @@ import { SalesInformation, iProductWholeSalePriceTier, iVariation } from "./comp
 import { ShippingInfo } from "./components/ShippingInfo";
 import { OtherProductInfo } from "./components/OtherProductInfo";
 import { saveNewProductToAPI } from "../../requests/product.request";
+import { useHistory } from "react-router";
 
 export interface iProductImages {
     images: File[],
@@ -33,6 +34,8 @@ export interface iProductShippingInfo {
 }
 
 export const AddNewProduct: FC = () => {
+
+    const navigation = useHistory();
 
     const { productCategories, parentCategories } = useProductCategory();
 
@@ -83,6 +86,7 @@ export const AddNewProduct: FC = () => {
             const result = await saveNewProductToAPI(params)
             
             await presentToast(result.message, 5000);
+            navigation.replace("/products")
 
         } catch (err: any) {
             presentAlert(err.response.data.message)

@@ -55,7 +55,7 @@ export const DashboardLayout: FC<iProps> = (props): JSX.Element => {
                         <IonTabButton tab="transactions" href="/transactions" style={{ background: 'transparent' }}>
                             <IonIcon icon={timerOutline} size="large" />
                         </IonTabButton>
-                        <IonTabButton tab="account" href="/account" style={{ background: 'transparent' }}>
+                        <IonTabButton tab="account" onClick={() => navigation.push("/account-settings/profile")} style={{ background: 'transparent' }}>
                             <IonIcon icon={personCircleOutline} size="large" />
                         </IonTabButton>
                     </IonTabBar>
