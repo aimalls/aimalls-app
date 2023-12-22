@@ -1,7 +1,6 @@
 import { IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonInput, IonItem, IonLabel, IonList, IonModal, IonPage, IonRow, IonSelect, IonSelectOption, IonTitle, IonToolbar, useIonAlert, useIonLoading, useIonToast } from "@ionic/react";
 import { FC, useMemo, useState } from "react";
 import "../../styles/v1/pages/products/AddNewProduct.scss"
-import { arrowDown, chevronDown, image } from "ionicons/icons";
 import ImageUpload from "../../components/ImageUpload";
 import useProductCategory, { iProductCategoryExtended } from "../../hooks/product/useProductCategories";
 import ProductCategoryPicker from "../../components/ProductCategoryPicker";

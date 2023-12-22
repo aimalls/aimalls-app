@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 
 
 const authHeadersForAPI = () => {
@@ -35,15 +35,14 @@ export const HTTP_API = (payload?: any) => {
     });
 
     axiosInstance.interceptors.response.use(
-        (response) => {
+        (response: AxiosResponse) => {
             return response;
-
         },
-        (error) => {
-            if (error.response.status == 401) {
+        (error: AxiosError) => {
+            // if (error.response.status == 401) {
                 // localStorage.removeItem("authToken");
                 // location.assign("/login")
-            }
+            // }
             // if (error.response.status == 401 && !error.response.data.authorization) {
             //     eventBus.$emit('unauthorized')
             // }
@@ -53,7 +52,7 @@ export const HTTP_API = (payload?: any) => {
             // if (error.response.status == 401 && error.response.data.authorization == 'non-member') {
             //     eventBus.$emit('non-member')
             // }
-            return Promise.reject(error);
+            throw error;
         }
     );
 

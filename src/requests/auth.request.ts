@@ -4,6 +4,7 @@ export interface iRegistrationForm {
     email: string,
     password: string,
     confirm_password: string,
+    otp: string
     referrer?: string
 }
 
@@ -39,6 +40,14 @@ export const getUserInfo = async () => {
 export const processLogoutToAPI = async () => {
     try {
         return await HTTP_API().post("/auth/logout")
+    } catch (error) {
+        return Promise.reject(error)
+    }
+}
+
+export const processResetPasswordToAPI = async (passwordForm: {password: string, confirm_password: string, otp: string}) => {
+    try {
+        return await HTTP_API().post("/auth/reset-password", passwordForm)
     } catch (error) {
         return Promise.reject(error)
     }

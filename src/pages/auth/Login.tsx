@@ -67,7 +67,7 @@ export const Login: FC<iProps> = (props): JSX.Element => {
                         <IonCol size="12" className="form">
                             <IonInput
                                 type="email"
-                                label="Business Email"
+                                label="Email"
                                 fill="solid"
                                 labelPlacement="floating"
                                 value={loginForm.email}
@@ -85,7 +85,7 @@ export const Login: FC<iProps> = (props): JSX.Element => {
                             </IonInput>
                         </IonCol>
                         <IonCol size="12" style={{ display: 'flex', justifyContent: 'end' }}>
-                            <IonButton size="small" fill="clear">Forgot Password?
+                            <IonButton routerLink="/forgot-password" size="small" fill="clear">Forgot Password?
                                 {/* <IonIcon slot="end" icon={ arrowForward }></IonIcon> */}
                             </IonButton>
                         </IonCol>

@@ -14,7 +14,7 @@ export const RegistrationSuccess: FC<iProps> = (props): JSX.Element => {
                             <IonIcon icon={ mail } color="light" style={{ fontSize: '5rem' }}></IonIcon>
                         </IonCol>
                         <IonCol size="12" className="ion-padding ion-text-center" style={{ color: '#FFF', fontWeight: 'bold', fontSize: '20px' }}>
-                            Registration Successful!, Please check your email to validate your registration.
+                            Registration Successful!
                         </IonCol>
                         <IonCol size="12" className="form-button">
                             <IonButton size="large" expand="block" shape="round" routerLink="/login">

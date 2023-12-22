@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow, useIonAlert, useIonLoading, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonIcon, useIonToast, IonInput, IonList, IonListHeader, IonItem, IonLabel } from "@ionic/react";
 import { useHistory } from "react-router";
 import { searchOutline, camera, cartOutline, chatboxEllipses, search, mic } from "ionicons/icons";
@@ -15,6 +15,10 @@ export const ShopSearch: FC<iProps> = (props): JSX.Element => {
     const [searchSuggestions, setSearchSuggestions] = useState<iSearchSuggestion[]>([]);
 
     const [searchString, setSearchString] = useState("")
+
+    useEffect(() => {
+        setSearchString((navigation.location.state as { search_string: string })?.search_string)
+    }, [])
 
     const handleCameraSearch = async () => {
         await presentToast("Smart scan is not yet available!", 3000)

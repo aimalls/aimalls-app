@@ -1,12 +1,13 @@
-import { IonPage, IonContent, IonGrid, IonCol, IonInput, IonRow, IonButton, IonIcon, useIonAlert, useIonLoading, IonHeader, IonToolbar } from "@ionic/react";
-import { FC, useState } from "react";
+import { IonPage, IonContent, IonGrid, IonCol, IonInput, IonRow, IonButton, IonIcon, useIonAlert, useIonLoading, IonHeader, IonToolbar, useIonToast } from "@ionic/react";
+import { FC, useMemo, useState } from "react";
 import { eyeOff, eye, arrowForward } from "ionicons/icons";
 import "../../styles/v1/pages/auth/Register.scss"
 import { iRegistrationForm, processLegacyRegistrationToAPI } from "../../requests/auth.request";
-import { iError } from "../../interfaces/Errors";
 import { useHistory } from "react-router";
 
 import logoRobot from "../../assets/images/logo-robot.png"
+import { getOTPFromAPI } from "../../requests/otp.request";
+import { set } from "date-fns";
 
 export interface iProps { }
 
@@ -15,14 +16,19 @@ export const Register: FC<iProps> = (props): JSX.Element => {
 
     const [presentAlert] = useIonAlert();
     const [present, dismiss] = useIonLoading();
+    const [presentToast] = useIonToast();
 
     const navigation = useHistory();
+    
 
     const [registrationForm, setRegistrationForm] = useState<iRegistrationForm>({
         email: '',
         password: '',
-        confirm_password: ''
+        confirm_password: '',
+        otp: ''
     })
+
+    const [otpSent, setOtpSent] = useState(false);
 
     const handleRegistrationFormChange = (key: string, value: string) => {
         setRegistrationForm((current) => {
@@ -40,11 +46,34 @@ export const Register: FC<iProps> = (props): JSX.Element => {
             const result = await processLegacyRegistrationToAPI(registrationForm)
             navigation.push("/register-success")
         } catch (error: any) {
-            presentAlert(error)
+            presentAlert(error.response.data.error)
         } finally {
             await dismiss();
         }
     }
+
+    const sendCode = async () => {
+        // logic to send verification code.
+        try {
+            await present();
+            const otpResult = await getOTPFromAPI(registrationForm.email, "register"); // call API to generate and send OTP
+            await presentToast(otpResult.data.message, 5000)
+            setOtpSent(true);
+        } catch (err: any) {
+            presentAlert(err.response.data.error)
+        } finally {
+            await dismiss();
+        }
+    }
+
+    const canResendCountdown = useMemo(() => {
+        if(otpSent) {
+            return setTimeout(() => {
+            setOtpSent(false);
+            }, 60000); // 1 minute
+        }
+        return null;
+    },[otpSent])
 
     return (
         <IonPage id="register">
@@ -65,7 +94,7 @@ export const Register: FC<iProps> = (props): JSX.Element => {
                         <IonCol size="12" className="form">
                             <IonInput
                                 type="email"
-                                label="Business Email"
+                                label="Email"
                                 fill="solid"
                                 value={registrationForm.email}
                                 labelPlacement="floating"
@@ -90,6 +119,16 @@ export const Register: FC<iProps> = (props): JSX.Element => {
                                 onIonInput={(e) => handleRegistrationFormChange("confirm_password", e.detail.value!)}
                             >
                             </IonInput>
+                            <IonInput
+                                disabled={!otpSent && registrationForm.otp == ""}
+                                type="number"
+                                label="OTP"
+                                fill="solid"
+                                value={registrationForm.otp}
+                                labelPlacement="floating"
+                                onIonInput={(e) => handleRegistrationFormChange("otp", e.detail.value!)}
+                            >
+                            </IonInput>
                         </IonCol>
                         <IonCol size="12" style={{ display: 'flex', justifyContent: 'end' }}>
                             <IonButton size="small" fill="clear" routerLink="/login">Already have store?
@@ -97,8 +136,13 @@ export const Register: FC<iProps> = (props): JSX.Element => {
                             </IonButton>
                         </IonCol>
                         <IonCol size="12" className="form-button">
-                            <IonButton size="default" expand="block" shape="round" onClick={() => processRegistration()}>
-                                <span slot="">Create Store</span>
+                            <IonButton disabled={otpSent} size="default" expand="block" shape="round" onClick={() => sendCode()}>
+                                <span slot="">Send Code</span>
+                            </IonButton>
+                        </IonCol>
+                        <IonCol size="12" className="form-button">
+                            <IonButton disabled={!otpSent && registrationForm.otp == ""} size="default" expand="block" shape="round" onClick={() => processRegistration()}>
+                                <span slot="">Register</span>
                             </IonButton>
                         </IonCol>
                     </IonRow>

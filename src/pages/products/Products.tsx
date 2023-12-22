@@ -15,7 +15,7 @@ export const Products: React.FC = () => {
                     </IonButtons>
                     <IonTitle className="ion-text-center">Products</IonTitle>
                     <IonButtons slot="end">
-                        <IonButton color={"primary"} routerLink="products/new">New</IonButton>
+                        <IonButton color={"primary"} routerLink="/products/new">New</IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
@@ -26,27 +26,20 @@ export const Products: React.FC = () => {
                     { userProducts && !isUserProductsLoading ? (
                         userProducts.length !== 0 ? (
                             userProducts.map(product => (
-                                <IonItemSliding key={product._id}>
-                                    <IonItem key={product._id}>
-                                        <IonAvatar slot="start">
-                                            { product.files.length !== 0 ? (
-                                                <IonImg src={ product.files[0].thumbnail_location } />
-                                            ): (
-                                                <IonImg src={ aiMallsProductPreloadSkeleton } />
-                                                
-                                            ) } 
-                                        </IonAvatar>
-                                        <IonLabel>
-                                            { product.productName }
-                                            <p>{ product.category ? product.category.name : null }</p>
-                                        </IonLabel>
-                                    </IonItem>
-                                    <IonItemOptions>
-                                        <IonItemOption routerLink={`products/${product._id}/update`}>Update</IonItemOption>
-                                        <IonItemOption>Delete</IonItemOption>
-                                    </IonItemOptions>
-                                </IonItemSliding>
-                                
+                                <IonItem key={product._id} detail routerLink={`/products/${product._id}/view`}>
+                                    <IonAvatar slot="start">
+                                        { product.files.length !== 0 ? (
+                                            <IonImg src={ product.files[0].thumbnail_location } />
+                                        ): (
+                                            <IonImg src={ aiMallsProductPreloadSkeleton } />
+                                            
+                                        ) } 
+                                    </IonAvatar>
+                                    <IonLabel>
+                                        { product.productName }
+                                        <p>{ product.category ? product.category.name : null }</p>
+                                    </IonLabel>
+                                </IonItem>
                             ))
                         ): (
                             <IonItem>

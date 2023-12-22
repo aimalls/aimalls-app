@@ -27,12 +27,12 @@ export const SplashScreen: FC = () => {
                     setIsMaintenanceModeStatus(true)
                 } else {
                     setTimeout(() => {
-                        navigation.push("/dashboard")
+                        navigation.push("/shop")
                     }, 3000)
                 }
             } else {
                 setTimeout(() => {
-                    navigation.push("/dashboard")
+                    navigation.push("/shop")
                 }, 3000)
             }
         }

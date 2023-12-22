@@ -1,44 +1,23 @@
-import { FC } from "react";
-import { IonAvatar, IonButton, IonCol, IonContent, IonFooter, IonGrid, IonIcon, IonItem, IonLabel, IonList, IonMenu, IonPage, IonRouterOutlet, IonRow, IonSplitPane, IonTabBar, IonTabButton, useIonAlert, useIonLoading } from "@ionic/react";
-import { useHistory } from "react-router";
+import { IonContent, IonFooter, IonIcon, IonPage, IonRouterOutlet, IonSplitPane, IonTabBar, IonTabButton } from "@ionic/react";
+import { home, statsChart, timerOutline, personCircleOutline } from "ionicons/icons";
 import DashboardRoutes from "../../routes/DashboardRoutes";
-import { home, statsChart, timerOutline, personCircleOutline, bagHandleOutline, heartOutline, homeOutline, logOutOutline, peopleOutline, receiptOutline } from "ionicons/icons";
-
-import avatar from '../../assets/images/attractive-cheerful-silly-blond-asian-girl-pointing-down-index-finger-look-camera-happy-optimistic-smile-propose-good-recommendation-standing-white-wall.jpg'
-import { processLogoutToAPI } from "../../requests/auth.request";
-
-import "../../styles/v1/layouts/dashboard/DashboardLayout.scss"
+import { useHistory } from "react-router";
 import { Sidebar } from "./Sidebar";
 
-export interface iProps {}
-
-
-export const DashboardLayout: FC<iProps> = (props): JSX.Element => {
+export const DashboardLayout: React.FC = () => {
     const navigation = useHistory();
-    const [present, dismiss] = useIonLoading();
-    const [presentAlert] = useIonAlert();
-
-
-
-    const processLogout = async () => {
-        try {
-            const logoutRequest = await processLogoutToAPI()
-            localStorage.removeItem("authToken")
-            navigation.push("/login")
-
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
+    
     return (
         <IonSplitPane when="md" contentId="dashboard-content" id="dashboard-layout">
             <Sidebar />
             <IonPage id="dashboard-content">
-                <IonContent>
+                {/* <IonContent>
                     <IonRouterOutlet>
                         <DashboardRoutes />
                     </IonRouterOutlet>
+                </IonContent> */}
+                <IonContent fullscreen>
+                    
                 </IonContent>
                 <IonFooter id="dashboard-tab-menu">
                     <IonTabBar slot="bottom" >
@@ -63,5 +42,6 @@ export const DashboardLayout: FC<iProps> = (props): JSX.Element => {
             </IonPage>
         </IonSplitPane>
     )
-};
+}
+
 export default DashboardLayout;

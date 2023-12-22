@@ -93,9 +93,14 @@ export const getUserProductsFromAPI = () => {
 }
 
 export const getProductInfoFromAPI = (productId: iProduct["_id"]): Promise<iProduct> => {
-    return HTTP_API().get("/product/get-product-info-by-id/", { params: productId })
-        .then(response => response.data)
-        .catch(err => Promise.reject(err));
+    return HTTP_API().get("/product/get-product-info-by-id/", { params: {productId} })
+        .then(response => {
+            return response.data
+        })
+        .catch(err => {
+            console.log(err)
+            return Promise.reject(err)
+        })
 }
 
 export const getSearchSuggestionsFromAPI = (search_string: string): Promise<iSearchSuggestion[]> => {

@@ -1,16 +1,29 @@
-#shop {
-    background: rgb(255,255,255);
-    background: linear-gradient(0deg, rgba(255,255,255,1) 85%, rgba(240,143,141,1) 95%, rgba(222,9,4,1) 100%);
-
+#shop-home-layout {
     ion-header {
         --background: none;
         padding: 10px 0px;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+        ion-toolbar.header-buttons {
+            ion-menu-button::part(icon) {
+                font-size: 30px;
+            }
+            ion-buttons {
+                ion-button::part(native) {
+                    color: #000;
+                    font-size: 16px;
+
+                }
+            }
+        }
         ion-toolbar {
+            
             --background: none;
             .search-btn {
                 width: 95%;
                 height: 35px;
                 background: #FFF;
+                border: thin solid var(--ion-color-primary);
+                border-radius: 10px;
                 margin: 0px 2.5%;
                 display: flex;
                 padding: 5px;
@@ -55,6 +68,42 @@
         ion-toolbar {
             display: flex;
             justify-content: space-between;
+        }
+
+        ion-tab-bar {
+            overflow:visible;
+            width: 100%;
+            align-self: end;
+            --border: none;
+            --color: rgb(158, 158, 158);
+            contain: none;
+            ion-tab-button.tab-selected {
+                
+                position: relative;
+                width: 60px;
+                color: var(--ion-color-primary-tint);
+                ion-icon {
+                    padding: 7px;
+                    border-radius: 50%;
+                }
+                &::part(native) {
+                    overflow: visible;
+                    &::before, &::after {
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                    }
+                    &::before {
+                        background: #FFF;
+                        background-repeat: no-repeat;
+                        height: 60px;
+                        width: 60px;
+                        border-radius: 50%;
+                    }
+                    
+                }
+                // background: rgb(158, 158, 158) !important;
+            }
         }
     }
 }

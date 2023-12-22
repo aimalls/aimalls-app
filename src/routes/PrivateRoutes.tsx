@@ -1,5 +1,5 @@
 import { Route } from "react-router"
-import { DashboardLayout } from "../layouts/dashboard/DashboardLayout"
+import { DashboardLayout } from "../layouts/shopper-dashboard/DashboardLayout"
 import UserContextProvider from "../contexts/UserContext"
 import { Products } from "../pages/products/Products"
 import { AddNewProduct } from "../pages/products/AddNewProduct"
@@ -12,15 +12,16 @@ import AddNewAddress from "../pages/account-settings/addresses/AddNewAddress"
 import { UpdateProduct } from "../pages/products/UpdateProduct"
 import Shop from "../pages/shop/Shop"
 import ShopSearch from "../pages/shop/ShopSearch"
+import { ViewProduct } from "../pages/products/ViewProduct"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
     return (
         <UserContextProvider>
             <Route path="/dashboard">
-                
-                    <DashboardLayout />
+                <DashboardLayout />
             </Route>
+
 
             <Route path="/products">
                 <Products />
@@ -30,6 +31,9 @@ export const PrivateRoutes = () => {
             </Route>
             <Route path="/products/:id/update">
                 <UpdateProduct />
+            </Route>
+            <Route path="/products/:id/view">
+                <ViewProduct />
             </Route>
             
 
@@ -56,10 +60,10 @@ export const PrivateRoutes = () => {
                 <AddNewAddress />
             </Route>
 
-            <Route path="/shop">
+            <Route exact path="/shop">
                 <Shop />
             </Route>
-            <Route path="/shop/search">
+            <Route exact path="/shop/search">
                 <ShopSearch />
             </Route>
             <Route path="/shop/search/:search_string">
