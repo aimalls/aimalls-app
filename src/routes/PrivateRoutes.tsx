@@ -13,6 +13,7 @@ import { UpdateProduct } from "../pages/products/UpdateProduct"
 import Shop from "../pages/shop/Shop"
 import ShopSearch from "../pages/shop/ShopSearch"
 import { ViewProduct } from "../pages/products/ViewProduct"
+import UpdateAddress from "../pages/account-settings/addresses/UpdateAddress"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
@@ -56,8 +57,11 @@ export const PrivateRoutes = () => {
             <Route path="/account-settings/addresses">
                 <Addresses />
             </Route>
-            <Route path="/account-settings/addresses/add-new">
+            <Route path="/account-settings/addresses/add-new/:as?">
                 <AddNewAddress />
+            </Route>
+            <Route path="/account-settings/addresses/edit-address">
+                <UpdateAddress />
             </Route>
 
             <Route exact path="/shop">

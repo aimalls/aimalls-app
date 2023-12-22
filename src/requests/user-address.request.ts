@@ -1,4 +1,5 @@
 import { HTTP_API } from "../helpers/http"
+import { iSelectedAddress } from "../store/address";
 
 export interface iUserAddress {
   _id: string;
@@ -13,6 +14,7 @@ export interface iUserAddress {
   contactNumber: string;
   label: string;
   default: boolean;
+  isDeleted: boolean,
   __v: number;
 }
 
@@ -68,6 +70,18 @@ export const saveNewUserAddress = (params: any) => {
 
 export const getUserAddresses = () => {
     return HTTP_API().get("/user-address/get-user-addresses")
+    .then(response => response.data)
+    .catch(err => Promise.reject(err))
+}
+
+export const processAddressDeleteToAPI = (addressId: iUserAddress['_id']) => {
+    return HTTP_API().post("/user-address/delete-address", { addressId })
+    .then(response => response.data)
+    .catch(err => Promise.reject(err))
+}
+
+export const saveUserAddressUpdateToAPI = (address: iSelectedAddress) => {
+  return HTTP_API().post("/user-address/update-address", address)
     .then(response => response.data)
     .catch(err => Promise.reject(err))
 }

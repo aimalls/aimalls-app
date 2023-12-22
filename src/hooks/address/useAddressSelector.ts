@@ -34,8 +34,8 @@ export interface iBarangay {
   name: string;
   oldName: string;
   subMunicipalityCode: boolean;
-  cityCode: string;
-  municipalityCode: boolean;
+  cityCode: boolean;
+  municipalityCode: string;
   districtCode: boolean;
   provinceCode: string;
   regionCode: string;

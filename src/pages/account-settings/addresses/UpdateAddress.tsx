@@ -1,17 +1,19 @@
 import { FC, useEffect, useState } from "react";
 import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow, useIonAlert, useIonLoading, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonList, IonListHeader, IonItem, IonInput, IonSelect, IonSelectOption, IonLabel, IonToggle, useIonToast } from "@ionic/react";
-import { useHistory, useParams } from "react-router";
+import { useHistory } from "react-router";
 import useAddressSelector, { iBarangay, iCity, iProvince, iRegion } from "../../../hooks/address/useAddressSelector";
-import { saveNewUserAddress } from "../../../requests/user-address.request";
+import { iUserAddress, saveNewUserAddress, saveUserAddressUpdateToAPI } from "../../../requests/user-address.request";
 import { useUserAddress } from "../../../hooks/user-address/useUserAddress";
-export interface iProps {}
-export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
+export const UpdateAddress: FC = ({}): JSX.Element => {
     const navigation = useHistory();
     const [present, dismiss] = useIonLoading();
     const [presentAlert] = useIonAlert();
     const [presentToast] = useIonToast();
 
-    const { as } = useParams<{ as: string }>();
+    const { selectedAddress: userAddress } = useSelector((state: RootState) => state.addressStore)
+
 
     const { 
         regionOptions, loadProvinces,
@@ -22,8 +24,8 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
 
 
     const [contact, setContact] = useState({
-        contactName: "",
-        contactNumber: ""
+        contactName: userAddress.contactName ?? "",
+        contactNumber: userAddress.contactNumber ?? ""
     })
 
     interface iAddress {
@@ -34,19 +36,30 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
         postalCode: string,
         streetBuildingHouse: string
     }
+
+    
     const [address, setAddress] = useState<iAddress>({
-        region: {} as iRegion,
-        province: {} as iProvince,
-        city: {} as iCity,
-        barangay: {} as iBarangay,
-        postalCode: "",
-        streetBuildingHouse: ""
+        region: (userAddress.region ?? {}) as iRegion,
+        province: (userAddress.province ?? {}) as iProvince,
+        city: (userAddress.city ?? {}) as iCity,
+        barangay: userAddress.barangay ?? {} as iBarangay,
+        postalCode: userAddress.postalCode ?? "",
+        streetBuildingHouse: userAddress.streetBuildingHouse ?? ""
     })
 
+    
     const [settings, setSettings] = useState({
-        label: as ? as : "Delivery",
-        setAsDefault: false
+        label: userAddress.label ?? "Delivery",
+        setAsDefault: userAddress.default,
     })
+    
+    useEffect(() => {
+        const keys = Object.keys(address) as (keyof typeof address)[];
+        keys.forEach(key => {
+            handleAddressChange(key, address[key]);
+        });
+    }, [userAddress]);
+
 
 
     const handleContactChange = (key: string, value: string) => {
@@ -67,7 +80,6 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
             current[key] = value
             return current;
         })
-        
         
 
         if (key == "region") {
@@ -123,15 +135,18 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
 
     const handleAddressSave = async () => {
         let params = {
-            contact,
-            address,
-            settings
+            _id: userAddress._id,
+            ...contact,
+            ...address,
+            label: settings.label,
+            default: settings.setAsDefault
         }
 
         try {
             await present();
-            const result = await saveNewUserAddress(params);
+            const result = await saveUserAddressUpdateToAPI(params);
             await presentToast(result.message, 4000)
+            console.log(params)
             await refetchAddresses()
             navigation.push("/account-settings/addresses")
         } catch (err: any) {
@@ -150,7 +165,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                     <IonButtons slot="start">
                         <IonBackButton defaultHref="/account-settings/addresses"></IonBackButton>
                     </IonButtons>
-                    <IonTitle className="ion-text-center">Add New Address</IonTitle>
+                    <IonTitle className="ion-text-center">Update Address</IonTitle>
                     <IonButtons slot="end">
                         <IonButton onClick={handleAddressSave}>Save</IonButton>
                     </IonButtons>
@@ -179,7 +194,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             onIonInput={(e) => handleContactChange("contactNumber", e.detail.value!)}
                         />
                     </IonItem>
-                    <IonListHeader>Address</IonListHeader>
+                    <IonListHeader>Address </IonListHeader>
                     <IonItem>
                         <IonSelect
                             placeholder="Select Region"
@@ -188,7 +203,10 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             value={address.region}
                             onIonChange={(e) => handleAddressChange("region", e.detail.value!)}
                         >
-                            { regionOptions.map((region: iRegion) => (
+                            <IonSelectOption value={address.region} key={address.region.code}>
+                                { `${address.region.regionName} ${address.region.name}` }
+                            </IonSelectOption>
+                            { regionOptions.filter((v: iRegion) => v.code != address.region.code).map((region: iRegion) => (
                                 <IonSelectOption value={region} key={region.code}>
                                     { `${region.regionName} ${region.name}` }
                                 </IonSelectOption>
@@ -203,6 +221,11 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             value={address.province}
                             onIonChange={(e) => handleAddressChange("province", e.detail.value!)}
                         >
+                            { address.province && (
+                                <IonSelectOption value={userAddress.province} key={userAddress.province.code}>
+                                    { `${userAddress.province.name}` }
+                                </IonSelectOption>
+                            ) }
                             { provinceOptions.map((province: iProvince) => (
                                 <IonSelectOption value={province} key={province.code}>
                                     { `${province.name}` }
@@ -218,6 +241,10 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             value={address.city}
                             onIonChange={(e) => handleAddressChange("city", e.detail.value!)}
                         >
+                            
+                            <IonSelectOption value={userAddress.city} key={userAddress.city.code}>
+                                { `${userAddress.city.name}` }
+                            </IonSelectOption>
                             { cityOptions.map((city: iCity) => (
                                 <IonSelectOption value={city} key={city.code}>
                                     { `${city.name}` }
@@ -233,6 +260,10 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             value={address.barangay}
                             onIonChange={(e) => handleAddressChange("barangay", e.detail.value!)}
                         >
+                            
+                            <IonSelectOption value={userAddress.barangay} key={userAddress.barangay.code}>
+                                { `${userAddress.barangay.name}` }
+                            </IonSelectOption>
                             { barangayOptions.map((barangay: iBarangay) => (
                                 <IonSelectOption value={barangay} key={barangay.code}>
                                     { `${barangay.name}` }
@@ -278,4 +309,4 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
         </IonPage>
     )
 };
-export default AddNewAddress;
+export default UpdateAddress;

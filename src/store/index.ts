@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit'
 
 
 import accountProfileStore from './account-profile'
+import addressStore from "./address"
 
 export const store = configureStore({
     reducer: {
-        accountProfileStore
+        accountProfileStore,
+        addressStore
     },
 })
   

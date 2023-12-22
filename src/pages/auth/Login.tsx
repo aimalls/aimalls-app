@@ -39,7 +39,7 @@ export const Login: FC<iProps> = (props): JSX.Element => {
         try {
             const result = await processLoginToAPI(loginForm.email, loginForm.password)
             setAuthToken(result.data.authToken)
-            navigation.push("/dashboard")
+            navigation.push("/shop")
         } catch (error: any) {
             presentAlert(error.response.data)
         } finally {

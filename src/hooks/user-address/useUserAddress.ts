@@ -3,11 +3,12 @@ import { getUserAddresses } from "../../requests/user-address.request"
 
 export const useUserAddress = () => {
     
-    const { data: userAddresses, isLoading: userAddressesLoading } = useQuery(["user-addresses-query"], () => getUserAddresses())
+    const { data: userAddresses, isLoading: userAddressesLoading, refetch } = useQuery(["user-addresses-query"], () => getUserAddresses())
 
     return {
         userAddresses,
-        userAddressesLoading
+        userAddressesLoading,
+        refetchAddresses: refetch
     }
 
 }
