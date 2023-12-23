@@ -35,6 +35,7 @@ export const ImageUpload: FC<iImageUploadProps> = ({ max, min, onChange }): JSX.
     }, [compressedFiles, compressedFilesThumb])
    
 
+
     const handleInputFileChange = async (files?: any) => {
         if (!files) {
             return 

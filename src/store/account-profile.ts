@@ -5,7 +5,30 @@ export interface iAccountProfile {
     name: name,
     gender: string,
     dob: string,
-    phone: string
+    phone: string,
+    supportingDocumentsType: string,
+    supportingDocumentImage: supportDocuments | undefined;
+    files?: file[],
+    isVerified?: boolean,
+    verificationStatus?: string | null
+}
+
+interface file {
+  _id: string;
+  user: string;
+  origin: string;
+  origin_id: string;
+  file_group: string;
+  file_location: string;
+  thumbnail_location: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export type supportDocuments = {
+    images: File[],
+    thumbs: File[]
 }
 
 type name = {
@@ -24,7 +47,12 @@ const initialState: iAccountProfile = {
     },
     gender: "",
     dob: "",
-    phone: ""
+    phone: "",
+    supportingDocumentsType: "",
+    supportingDocumentImage: undefined,
+    files: [],
+    verificationStatus: null,
+    isVerified: false
 }
 
 const mutations = {
@@ -43,6 +71,21 @@ const mutations = {
     SET_PHONE: (state: iAccountProfile, { payload }: PayloadAction<iAccountProfile['phone']>) => {
         state.phone = payload
     },
+    SET_SUPPORTING_DOCUMENTS_TYPE: (state: iAccountProfile, { payload }: PayloadAction<iAccountProfile['supportingDocumentsType']>) => {
+        state.supportingDocumentsType = payload
+    },
+
+    SET_SUPPORTING_DOCUMENTS: (state: iAccountProfile, { payload }: PayloadAction<iAccountProfile['files']>) => {
+        state.files = payload
+    },
+
+    SET_IS_VERIFIED: (state: iAccountProfile, { payload }: PayloadAction<iAccountProfile['isVerified']>) => {
+        state.isVerified = payload
+    },
+
+    SET_VERIFICATION_STATUS: (state: iAccountProfile, { payload }: PayloadAction<iAccountProfile['verificationStatus']>) => {
+        state.verificationStatus = payload
+    },
 }
 
 export const accountProfileStore = createSlice({
@@ -55,7 +98,11 @@ export const {
     SET_NAME,
     SET_GENDER,
     SET_DOB,
-    SET_PHONE
+    SET_PHONE,
+    SET_SUPPORTING_DOCUMENTS_TYPE,
+    SET_SUPPORTING_DOCUMENTS,
+    SET_IS_VERIFIED,
+    SET_VERIFICATION_STATUS
 } = accountProfileStore.actions
 
 export default accountProfileStore.reducer
