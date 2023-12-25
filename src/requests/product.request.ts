@@ -86,11 +86,12 @@ export const saveNewProductToAPI = (product: any) => {
         .catch(err => Promise.reject(err))
 }
 
-export const getUserProductsFromAPI = () => {
-    return HTTP_API().get("/product/get-user-products")
+export const getUserProductsFromAPI = (status: string) => {
+    return HTTP_API().get("/product/get-user-products", { params: { status } })
         .then(response => response.data)
         .catch(err => Promise.reject(err));
 }
+
 
 export const getProductInfoFromAPI = (productId: iProduct["_id"]): Promise<iProduct> => {
     return HTTP_API().get("/product/get-product-info-by-id/", { params: {productId} })

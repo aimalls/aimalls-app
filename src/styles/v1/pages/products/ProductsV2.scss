@@ -1,0 +1,23 @@
+#products {
+    background: #f8f8f8;
+    ion-header {
+        box-shadow: none;
+        ion-toolbar {
+            --background: #ffffff;
+
+        }
+    }
+    ion-content {
+        --background: "#F00";
+    }
+    ion-footer {
+        ion-toolbar {
+            padding: 0px 10px;
+            ion-button {
+                &::part(native) {
+                    color: #FFF;
+                }
+            }
+        }
+    }
+}

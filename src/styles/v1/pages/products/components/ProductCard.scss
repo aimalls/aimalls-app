@@ -1,0 +1,41 @@
+.product-card {
+    font-size: 14px;
+    padding: 10px;
+    box-shadow: none;
+    background: #FFF;
+    display: flex;
+    flex-direction: column;
+    .product-details {
+        display: flex;
+    }
+    .product-buttons {
+        display: flex;
+        justify-content: end;
+        align-self: end;
+        ion-button {
+            &::part(native) {
+                font-size: 12px;
+                padding: 0px 5px;
+            }
+        }
+    }
+    ion-img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+    }
+    .product-desc {
+        padding: 0px 10px;
+
+        .product-name {
+            padding: 0px 0px 10px;
+        }
+        .product-price {
+            padding: 0px 0px 10px;
+            font-weight: bold;
+        }
+        .product-stock {
+            font-size: 12px;
+        }
+    }
+}

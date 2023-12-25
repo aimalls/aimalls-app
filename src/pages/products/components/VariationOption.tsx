@@ -47,7 +47,7 @@ export const VariationOption: FC<iVariationOptionProps> = ({ option, index, onOp
                 type="text"
                 label="Option Name"
                 value={option.name}
-                placeholder="Input Price"
+                placeholder="Input Option Name"
                 labelPlacement="floating"
                 fill="solid"
                 style={{ marginBottom: '10px' }}
@@ -75,7 +75,7 @@ export const VariationOption: FC<iVariationOptionProps> = ({ option, index, onOp
             ></IonInput>
             <IonInput
                 type="text"
-                label="SKU"
+                label="SKU (Optional)"
                 value={option.sku}
                 placeholder="Input SKU"
                 labelPlacement="floating"

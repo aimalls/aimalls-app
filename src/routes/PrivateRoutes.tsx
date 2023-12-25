@@ -14,6 +14,7 @@ import Shop from "../pages/shop/Shop"
 import ShopSearch from "../pages/shop/ShopSearch"
 import { ViewProduct } from "../pages/products/ViewProduct"
 import UpdateAddress from "../pages/account-settings/addresses/UpdateAddress"
+import { ProductsV2 } from "../pages/products/ProductsV2"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
@@ -25,12 +26,12 @@ export const PrivateRoutes = () => {
 
 
             <Route path="/products">
-                <Products />
+                <ProductsV2 />
             </Route>
             <Route path="/products/new">
                 <AddNewProduct />
             </Route>
-            <Route path="/products/:id/update">
+            <Route exact path="/products/:id/update">
                 <UpdateProduct />
             </Route>
             <Route path="/products/:id/view">

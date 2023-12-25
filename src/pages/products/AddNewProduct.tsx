@@ -12,6 +12,9 @@ import { ShippingInfo } from "./components/ShippingInfo";
 import { OtherProductInfo } from "./components/OtherProductInfo";
 import { saveNewProductToAPI } from "../../requests/product.request";
 import { useHistory } from "react-router";
+import { useUserProduct } from "../../hooks/product/useUserProduct";
+import { ProductNameForm } from "./components/ProductNameForm";
+import { ProductDescriptionForm } from "./components/ProductDescriptionForm";
 
 export interface iProductImages {
     images: File[],
@@ -38,6 +41,7 @@ export const AddNewProduct: FC = () => {
     const navigation = useHistory();
 
     const { productCategories, parentCategories } = useProductCategory();
+    const { userProducts, isUserProductsLoading, refetch: refetchUserProducts } = useUserProduct();
 
     const [presentAlert] = useIonAlert();
     const [present, dismiss] = useIonLoading();
@@ -86,6 +90,7 @@ export const AddNewProduct: FC = () => {
             const result = await saveNewProductToAPI(params)
             
             await presentToast(result.message, 5000);
+            await refetchUserProducts();
             navigation.replace("/products")
 
         } catch (err: any) {
@@ -119,8 +124,9 @@ export const AddNewProduct: FC = () => {
                     <ImageUpload onChange={(images, thumbs) => setProductImages({images, thumbs})} min={1} max={8} />
                     </div>
                 </IonCard>
-                <IonCard style={{ padding: '0px 20px' }}>
-                    <IonInput 
+                <IonCard>
+                    <ProductNameForm onDone={(value) => setProductName(value)} productName={productName} />
+                    {/* <IonInput 
                         value={productName}
                         onIonInput={(event) => setProductName(event.detail.value!)}
                         type="text" 
@@ -128,10 +134,11 @@ export const AddNewProduct: FC = () => {
                         labelPlacement="floating" 
                         placeholder="Input Product Name"
                         maxlength={255}
-                    ></IonInput>
+                    ></IonInput> */}
                 </IonCard>
-                <IonCard style={{ padding: '0px 20px' }}>
-                    <IonInput 
+                <IonCard>
+                    <ProductDescriptionForm onDone={(value) => setProductDescription(value)} productDescription={productDescription} />
+                    {/* <IonInput 
                         value={productDescription}
                         onIonInput={(event) => setProductDescription(event.detail.value!)}
                         type="text" 
@@ -139,7 +146,7 @@ export const AddNewProduct: FC = () => {
                         labelPlacement="floating" 
                         placeholder="Input product description"
                         maxlength={255}
-                    ></IonInput>
+                    ></IonInput> */}
                 </IonCard>
                 <IonCard>
                     <ProductCategoryPicker onSelect={(category) => setSelectedCategory(category)} selectedCategory={selectedCategory} />

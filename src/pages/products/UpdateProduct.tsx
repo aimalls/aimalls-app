@@ -105,10 +105,9 @@ export const UpdateProduct: FC = () => {
         <IonPage id="add-new-product">
             <IonHeader>
                 <IonToolbar>
-                    <IonButtons style={{ position: 'fixed', top: '0', left: '0', height: '100%' }}>
+                    <IonButtons slot="start">
                         <IonBackButton defaultHref="/products"></IonBackButton>
-                    </IonButtons>
-                    <IonTitle className="ion-text-center">Update Product</IonTitle>
+                    </IonButtons>Update Product
 
                 </IonToolbar>
             </IonHeader>

@@ -8,7 +8,7 @@ export interface iProductCategoryExtended extends iProductCategory {
 }
 
 export const useProductCategory = () => {
-    const { data: productCategories, isLoading: isProductCategoriesLoading } = useQuery(
+    const { data: productCategories, isLoading: isProductCategoriesLoading, refetch } = useQuery(
         ["product-categories-query"], () => getProductCategoriesFromAPI()
     )
 
@@ -34,7 +34,8 @@ export const useProductCategory = () => {
     return {
         productCategories,
         isProductCategoriesLoading,
-        parentCategories
+        parentCategories,
+        refetch
     }
 }
 

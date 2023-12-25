@@ -1,6 +1,11 @@
-import { IonAvatar, IonBackButton, IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonImg, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonPage, IonTitle, IonToolbar } from "@ionic/react"
+import { IonAvatar, IonBackButton, IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonImg, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader, IonPage, IonRouterOutlet, IonTab, IonTabBar, IonTabButton, IonTabs, IonTitle, IonToolbar } from "@ionic/react"
 import { useUserProduct } from "../../hooks/product/useUserProduct"
 import aiMallsProductPreloadSkeleton from "../../assets/images/logo.png"
+import { Route } from "react-router";
+import { LiveProducts } from "./LiveProducts";
+import { InReviewProducts } from "./InReviewProducts";
+import { ListingFailedProducts } from "./ListingFailedProducts";
+import { DelistedProducts } from "./DelistedProducts";
 
 export const Products: React.FC = () => {
 
@@ -21,7 +26,7 @@ export const Products: React.FC = () => {
             </IonHeader>
             <IonContent>
                 <IonList lines="full">
-
+                    
                     <IonListHeader>My Products</IonListHeader>
                     { userProducts && !isUserProductsLoading ? (
                         userProducts.length !== 0 ? (
