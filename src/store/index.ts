@@ -3,10 +3,12 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import accountProfileStore from './account-profile'
 import addressStore from "./address"
+import shopProfileStore from './shop-profile'
 
 export const store = configureStore({
     reducer: {
         accountProfileStore,
+        shopProfileStore,
         addressStore
     },
 })

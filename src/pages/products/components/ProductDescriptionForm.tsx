@@ -11,9 +11,12 @@ export interface iProductDescription {
 export const ProductDescriptionForm: FC<iProductDescription> = ({ onDone, productDescription }) => {
 
     const [isProductDescriptionDialogOpen, setIsProductDescriptionDialogOpen] = useState(false);
-    const [formProductDescription, setFormProductDescription] = useState("");
+    const [formProductDescription, setFormProductDescription] = useState(productDescription ?? "");
 
 
+    useEffect(() => {
+        setFormProductDescription(productDescription)
+    }, [productDescription])
 
     const handleProductDescriptionDone = () => {
         onDone(formProductDescription)
@@ -27,7 +30,7 @@ export const ProductDescriptionForm: FC<iProductDescription> = ({ onDone, produc
                 <IonLabel slot="start" style={{ display: 'flex', alignItems: 'center' }}>
                     Product Description
                 </IonLabel>
-                <div>{ productDescription }</div>
+                <div>{ formProductDescription }</div>
                 <IonIcon icon={ chevronForward} size="small" slot="end"></IonIcon>
             </IonButton>
             <IonModal isOpen={ isProductDescriptionDialogOpen }>

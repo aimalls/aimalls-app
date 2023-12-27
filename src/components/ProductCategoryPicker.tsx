@@ -16,18 +16,24 @@ export const ProductCategoryPicker: FC<iProductCategoryPickerProps> = ({onSelect
     const { parentCategories, productCategories } = useProductCategory();
 
     const [isPickerOpen, setIsPickerOpen] = useState(false);
+    
 
     const [currentCategories, setCurrentCategories] = useState<iProductCategoryExtended[]>([])
+
+
     
     useEffect(() => {
         if (parentCategories) {
             setCurrentCategories(parentCategories)
         }
     }, [parentCategories])
+    
 
     const handleCategoryPickDone = () => {
         setIsPickerOpen(false)
     }
+
+
 
     const handleCategorySelect = (category: iProductCategoryExtended | iProductCategory) => {
         const categories = productCategories.filter((val: iProductCategoryExtended) => val.parent ===  category._id) as iProductCategoryExtended[]

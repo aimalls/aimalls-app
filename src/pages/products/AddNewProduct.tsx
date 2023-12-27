@@ -15,6 +15,7 @@ import { useHistory } from "react-router";
 import { useUserProduct } from "../../hooks/product/useUserProduct";
 import { ProductNameForm } from "./components/ProductNameForm";
 import { ProductDescriptionForm } from "./components/ProductDescriptionForm";
+import { useUserInReviewProducts } from "../../hooks/product/useUserInReviewProducts";
 
 export interface iProductImages {
     images: File[],
@@ -41,7 +42,7 @@ export const AddNewProduct: FC = () => {
     const navigation = useHistory();
 
     const { productCategories, parentCategories } = useProductCategory();
-    const { userProducts, isUserProductsLoading, refetch: refetchUserProducts } = useUserProduct();
+    const { userInReviewProducts, isUserInReviewProductsLoading, refetch: refetchUserProducts } = useUserInReviewProducts();
 
     const [presentAlert] = useIonAlert();
     const [present, dismiss] = useIonLoading();
@@ -91,7 +92,7 @@ export const AddNewProduct: FC = () => {
             
             await presentToast(result.message, 5000);
             await refetchUserProducts();
-            navigation.replace("/products")
+            navigation.replace("/products/reviewing")
 
         } catch (err: any) {
             presentAlert(err.response.data.message)
@@ -126,27 +127,9 @@ export const AddNewProduct: FC = () => {
                 </IonCard>
                 <IonCard>
                     <ProductNameForm onDone={(value) => setProductName(value)} productName={productName} />
-                    {/* <IonInput 
-                        value={productName}
-                        onIonInput={(event) => setProductName(event.detail.value!)}
-                        type="text" 
-                        label="Product Name" 
-                        labelPlacement="floating" 
-                        placeholder="Input Product Name"
-                        maxlength={255}
-                    ></IonInput> */}
                 </IonCard>
                 <IonCard>
                     <ProductDescriptionForm onDone={(value) => setProductDescription(value)} productDescription={productDescription} />
-                    {/* <IonInput 
-                        value={productDescription}
-                        onIonInput={(event) => setProductDescription(event.detail.value!)}
-                        type="text" 
-                        label="Description" 
-                        labelPlacement="floating" 
-                        placeholder="Input product description"
-                        maxlength={255}
-                    ></IonInput> */}
                 </IonCard>
                 <IonCard>
                     <ProductCategoryPicker onSelect={(category) => setSelectedCategory(category)} selectedCategory={selectedCategory} />

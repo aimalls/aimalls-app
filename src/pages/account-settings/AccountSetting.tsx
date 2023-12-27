@@ -11,7 +11,7 @@ export const AccountSetting: FC<iProps> = (props): JSX.Element => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons style={{ position: 'fixed'}} slot="start">
-                        <IonBackButton defaultHref="/dashboard"></IonBackButton>
+                        <IonBackButton defaultHref="/shop"></IonBackButton>
                     </IonButtons>
                     <IonTitle className="ion-text-center">Account Settings</IonTitle>
                 </IonToolbar>
@@ -20,7 +20,8 @@ export const AccountSetting: FC<iProps> = (props): JSX.Element => {
                 <IonList lines="full">
                     <IonListHeader>Account</IonListHeader>
                     <IonItem button detail routerLink="/account-settings/profile">Account Profile</IonItem>
-                    <IonItem button detail>Verifications</IonItem>
+                    <IonItem button detail routerLink="/account-settings/shop-profile">Shop Profile</IonItem>
+                    {/* <IonItem button detail>Verifications</IonItem> */}
                     <IonItem button detail routerLink="/account-settings/addresses">Addresses</IonItem>
                 </IonList>
             </IonContent>

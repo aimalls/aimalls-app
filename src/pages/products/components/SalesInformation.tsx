@@ -46,6 +46,17 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone, productSa
     const [productPrice, setProductPrice] = useState<string>(productSalesInfo!.price)
     const [productStock, setProductStock] = useState<string>(productSalesInfo!.stock)
 
+    useEffect(() => {
+        if (productSalesInfo && productSalesInfo?.variations.length > 0) {
+            setVariationsEnabled(true)
+            console.log(productSalesInfo?.variations)
+            setVariations(current => {
+                return [...productSalesInfo?.variations]
+                
+            })
+        }
+    },  [productSalesInfo])
+
     const makeid = (length: number) => {
         let result = '';
         const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -277,7 +288,6 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone, productSa
                             
                                 { variationsEnabled ? (
                                     <IonCol size="12">
-                                        
                                         { variations.map((variation, index) => (
                                             <div key={`variation-${variation.id}`}>
                                                 <VariationForm 

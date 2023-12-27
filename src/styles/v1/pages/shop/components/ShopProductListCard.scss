@@ -1,0 +1,22 @@
+.shop-product-list-card {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+    // align-items: center;
+    .product-details {
+        margin-top: auto;
+        > div {
+            padding: 10px;
+        }
+        .product-price {
+            color: var(--ion-color-secondary);
+            font-weight: bold;
+        }
+        .product-name {
+            font-weight: bold;
+            color: #000;
+        }
+    }
+}

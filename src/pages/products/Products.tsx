@@ -16,7 +16,7 @@ export const Products: React.FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons slot="start">
-                        <IonBackButton defaultHref="/dashboard"></IonBackButton>
+                        <IonBackButton defaultHref="/shop"></IonBackButton>
                     </IonButtons>
                     <IonTitle className="ion-text-center">Products</IonTitle>
                     <IonButtons slot="end">

@@ -17,7 +17,7 @@ export const ProductCard: React.FC<tProductCardProp> = ({ product }) => {
                 </div>
                 <div className="product-desc">
                     <div className="product-name">
-                        { product.productName } asdasdasd as  asdasdas dasd asd
+                        { product.productName }
                     </div>
                     <div className="product-price">
                         Price: ₱{ product.price }

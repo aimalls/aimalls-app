@@ -10,20 +10,23 @@ import { InputInputEventDetail } from "@ionic/core";
 import { SpecificationSelectInput } from "./product-specification-setter/SpecificationSelectInput";
 import { SpecificationUnitInput } from "./product-specification-setter/SpecificationUnitInput";
 
-interface iProductSpecificationSetterProps {
-    productCategory?: iProductCategory,
-    onChange: (value: spec) => void
-}
 
 type spec = { [key: string]: string }
 
-export const ProductSpecificationSetter: FC<iProductSpecificationSetterProps> = ({ productCategory, onChange }) => {
+interface iProductSpecificationSetterProps {
+    productCategory?: iProductCategory,
+    productSpecification?: spec,
+    onChange: (value: spec) => void
+}
+
+
+export const ProductSpecificationSetter: FC<iProductSpecificationSetterProps> = ({ productCategory, onChange, productSpecification }) => {
 
     const [isSetterOpen, setIsSetterOpen] = useState(false);
 
     const { productSpecificationByCategory, productSpecificationByCategoryIsLoading, refetchSpecifications } = useProductSpecification(productCategory!);
 
-    const [productSpecificationForm, setProductSpecificationForm] = useState<spec>({})
+    const [productSpecificationForm, setProductSpecificationForm] = useState<spec>(productSpecification ?? {})
 
     useEffect(() => {
         if (productCategory) {
@@ -46,6 +49,7 @@ export const ProductSpecificationSetter: FC<iProductSpecificationSetterProps> = 
     }, [productSpecificationByCategory])
 
     const handleSpecificationInputChange = (required: boolean, selfFill: boolean, keyValue?: { key: string, value: string }) => {
+        
         setProductSpecificationForm((current) => {
             let curr = {...current};
             if (keyValue) {
@@ -57,17 +61,18 @@ export const ProductSpecificationSetter: FC<iProductSpecificationSetterProps> = 
     }
 
     const setCount = useMemo(() => {
-        const obj = Object.keys(productSpecificationForm);
+        const obj = productSpecification ? Object.keys(productSpecification) : Object.keys(productSpecificationForm);
         let count = 0;
         obj.forEach(key => {
-            if (productSpecificationForm[key] !== "") {
+            if (((productSpecification && productSpecification[key]) ?? productSpecificationForm[key]) !== "") {
                 count++;
             }
         })
 
         return count >= 2 ? `${count} Items Set`: `${count} Item Set`;
 
-    }, [productSpecificationForm])
+    }, [productSpecificationForm, productSpecification])
+    
 
     const onSpecificationDone = () => {
         onChange(productSpecificationForm)
@@ -106,7 +111,7 @@ export const ProductSpecificationSetter: FC<iProductSpecificationSetterProps> = 
                     </IonToolbar>
                 </IonHeader>
                 <IonContent>
-                    { productSpecificationByCategory ? (
+                    { productSpecificationByCategory && productSpecification ? (
                         <IonGrid>
                             <IonRow className="form">
                                 { productSpecificationByCategory.map((specification: iProductSpecification) => (
@@ -119,7 +124,7 @@ export const ProductSpecificationSetter: FC<iProductSpecificationSetterProps> = 
                                                 fill="solid"
                                                 label={ `${specification.name} ${specification.attributes?.includes("Required") ? '*' : ''}` }
                                                 labelPlacement="floating"
-                                                value={productSpecificationForm[specification.name as keyof typeof productSpecificationForm]}
+                                                value={productSpecification[specification.name as keyof typeof productSpecification] ?? productSpecification[specification.name as keyof typeof productSpecification]}
                                                 onIonInput={({ detail }) => 
                                                 handleSpecificationInputChange(
                                                     !!specification.attributes?.includes("Required"),
@@ -128,7 +133,7 @@ export const ProductSpecificationSetter: FC<iProductSpecificationSetterProps> = 
                                             ></IonInput>
                                         ): specification.fieldType == "select" ? (
                                             <SpecificationSelectInput specification={ specification } 
-                                            value={productSpecificationForm[specification.name as keyof typeof productSpecificationForm]}
+                                            value={productSpecification[specification.name as keyof typeof productSpecification] ?? productSpecificationForm[specification.name as keyof typeof productSpecificationForm]}
                                             onChange={(e) => handleSpecificationInputChange(
                                                 !!specification.attributes?.includes("Required"),
                                                 !!specification.attributes?.includes("Self-Fill"),
@@ -137,7 +142,7 @@ export const ProductSpecificationSetter: FC<iProductSpecificationSetterProps> = 
                                             )} />
                                         ): specification.fieldType == "unitInput" ? (
                                             <SpecificationUnitInput specification={specification}
-                                                value={productSpecificationForm[specification.name as keyof typeof productSpecificationForm]}
+                                                value={productSpecification[specification.name as keyof typeof productSpecification] ?? productSpecificationForm[specification.name as keyof typeof productSpecificationForm]}
                                                 onChange={(e) => handleSpecificationInputChange(
                                                     !!specification.attributes?.includes("Required"),
                                                     !!specification.attributes?.includes("Self-Fill"),

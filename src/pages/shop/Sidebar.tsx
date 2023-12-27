@@ -32,11 +32,11 @@ export const Sidebar: React.FC = () => {
     }
 
     const navigations = [
-        {
-            link: "/dashboard",
-            icon: homeOutline,
-            text: "Dashboard"
-        },
+        // {
+        //     link: "/dashboard",
+        //     icon: homeOutline,
+        //     text: "Dashboard"
+        // },
         {
             link: "/shop",
             icon: cartOutline,
@@ -52,11 +52,11 @@ export const Sidebar: React.FC = () => {
             icon: personCircleOutline,
             text: "Account Settings"
         },
-        {
-            link: "/settings",
-            icon: cog,
-            text: "Settings"
-        },
+        // {
+        //     link: "/settings",
+        //     icon: cog,
+        //     text: "Settings"
+        // },
     ]
 
     return (

@@ -4,9 +4,9 @@ import { useHistory, useParams } from "react-router";
 import "../../styles/v1/pages/shop/Shop.scss"
 import { camera, cartOutline, chatboxEllipses, heart, home, notifications, personCircle, scan, searchOutline } from "ionicons/icons";
 import { useProductSearch } from "../../hooks/product/useProductSearch";
-import skeletonPreload from "../../assets/images/skeleton-preload.png"
 import aimallsVert from "../../assets/images/aimalls-vert.png"
 import { Sidebar } from "./Sidebar";
+import ShopProductListCard from "./components/ShopProductListCard";
 export interface iProps {}
 export const Shop: FC<iProps> = (props): JSX.Element => {
     const navigation = useHistory();
@@ -41,7 +41,7 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
                         <IonMenuButton slot="start"></IonMenuButton>
                         <IonImg src={aimallsVert} style={{ height: "30px" }} />
                         <IonButtons slot="end">
-                            <IonButton>
+                            <IonButton routerLink="/shop/cart">
                                 <IonIcon icon={ cartOutline } />
                             </IonButton>
                             <IonButton>
@@ -66,19 +66,9 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
                             { productSearchResult && productSearchResult.length !==0  && !isProductSearchResultLoading ? (
                                 productSearchResult.map((product) => (
                                     <IonCol size="6" key={product._id}>
-                                        <IonCard style={{ height: '100%' }}>
-                                            <IonImg src={ product.files.length !== 0 ? product.files[0].thumbnail_location : skeletonPreload }></IonImg>
-                                            <div className="product-name">
-                                                { product.productName }
-                                            </div>
-                                            <div className="product-price">
-                                                
-                                                Php{ product.price ? product.price?.toFixed(2) : product.variants[0] ? product.variants[0].options[0].price.toFixed(2) : "" }
-                                            </div>
-                                        </IonCard>
+                                        <ShopProductListCard product={product} />
                                     </IonCol>
                                 ))
-
                             ) : isProductSearchResultLoading ? (
                                 <IonCol size="12">Loading Products...</IonCol>
                             ) : productSearchResult?.length === 0 ? (
@@ -92,13 +82,13 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
                         <IonTabButton tab="shop" href="/shop">
                             <IonIcon icon={ home }></IonIcon>
                         </IonTabButton>
-                        <IonTabButton tab="wishlist" href="/wishlist">
+                        <IonTabButton tab="wishlist">
                             <IonIcon icon={ heart }></IonIcon>
                         </IonTabButton>
                         <IonTabButton tab="scan">
                             <IonIcon icon={ scan }></IonIcon>
                         </IonTabButton>
-                        <IonTabButton tab="notifications" href="/notifications">
+                        <IonTabButton tab="notifications">
                             <IonIcon icon={ notifications }></IonIcon>
                         </IonTabButton>
                         <IonTabButton tab="profile" onClick={() => navigation.push("/account-settings/profile")} >

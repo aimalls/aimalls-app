@@ -1,0 +1,41 @@
+#view-shop-product {
+    ion-header {
+        --background: 'none';
+        ion-toolbar {
+           --background: 'none';
+        }
+    }
+    ion-content {
+        --background: none;
+        .swiper {
+            height: 40%;
+            .swiper-slide {
+                height: 100%;
+                ion-img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+        
+        }
+        .product-details {
+            .product-price {
+                color: var(--ion-color-secondary);
+                font-weight: bold;
+            }
+            .product-name {
+                font-weight: bold;
+                color: #000;
+            }
+            
+        }
+        .product-action-buttons {
+            ion-button.rating-button {
+                &::part(native) {
+                    padding: 0px; 
+                }
+            }
+        }
+    }
+}

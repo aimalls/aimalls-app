@@ -15,6 +15,9 @@ import ShopSearch from "../pages/shop/ShopSearch"
 import { ViewProduct } from "../pages/products/ViewProduct"
 import UpdateAddress from "../pages/account-settings/addresses/UpdateAddress"
 import { ProductsV2 } from "../pages/products/ProductsV2"
+import ViewShopProduct from "../pages/shop/ViewShopProduct"
+import { UserCart } from "../pages/shop/UserCart"
+import ShopProfile from "../pages/account-settings/shop-profile/ShopProfile"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
@@ -47,6 +50,9 @@ export const PrivateRoutes = () => {
             <Route path="/account-settings/profile">
                 <AccountProfile />
             </Route>
+            <Route path="/account-settings/shop-profile">
+                <ShopProfile />
+            </Route>
             <Route path="/account-settings/profile/set-name">
                 <SetName />
             </Route>
@@ -71,8 +77,14 @@ export const PrivateRoutes = () => {
             <Route exact path="/shop/search">
                 <ShopSearch />
             </Route>
+            <Route path="/shop/product/:id/view">
+                <ViewShopProduct />
+            </Route>
             <Route path="/shop/search/:search_string">
                 <Shop />
+            </Route>
+            <Route exact path="/shop/cart">
+                <UserCart />
             </Route>
 
         </UserContextProvider>

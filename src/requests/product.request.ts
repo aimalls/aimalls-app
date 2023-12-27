@@ -5,6 +5,9 @@ export interface iProduct {
     user: string;
     productName: string;
     productDescription: string;
+    productSpecifications?: {
+        [key: string]: string
+    }
     category: Category;
     price?: number;
     stock?: number;
@@ -20,9 +23,11 @@ export interface iProduct {
     files: File[];
     wholeSalePriceTier?: WholeSalePriceTier[];
     status?: string;
+    priceRange?: string | number;
+    totalStocks?: number;
 }
 
-interface WholeSalePriceTier {
+export interface WholeSalePriceTier {
     _id: string;
     minimumQuantity: number;
     maximumQuantity: number;
@@ -45,7 +50,7 @@ interface File {
     __v: number;
 }
 
-interface Variant {
+export interface Variant {
     _id: string;
     variant: string;
     options: Option[];

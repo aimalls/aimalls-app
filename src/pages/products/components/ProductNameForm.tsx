@@ -11,9 +11,14 @@ export interface iProductName {
 export const ProductNameForm: FC<iProductName> = ({ onDone, productName }) => {
 
     const [isProductNameDialogOpen, setIsProductNameDialogOpen] = useState(false);
-    const [formProductName, setFormProductName] = useState("");
+    const [formProductName, setFormProductName] = useState(productName ?? "");
 
 
+    useEffect(() => {
+        if (productName) {
+            setFormProductName(productName)
+        }
+    }, [productName])
 
     const handleProductNameDone = () => {
         onDone(formProductName)
@@ -27,7 +32,7 @@ export const ProductNameForm: FC<iProductName> = ({ onDone, productName }) => {
                 <IonLabel slot="start" style={{ display: 'flex', alignItems: 'center' }}>
                     Product Name
                 </IonLabel>
-                { productName }
+                { formProductName } 
                 <IonIcon icon={ chevronForward} size="small" slot="end"></IonIcon>
             </IonButton>
             <IonModal isOpen={ isProductNameDialogOpen }>
