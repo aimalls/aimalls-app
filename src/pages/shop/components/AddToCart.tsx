@@ -1,6 +1,6 @@
 import { IonButton, IonButtons, IonChip, IonCol, IonContent, IonFooter, IonGrid, IonIcon, IonImg, IonItemDivider, IonModal, IonRow, IonToolbar, useIonAlert, useIonLoading, useIonToast } from "@ionic/react"
 import { iProduct } from "../../../requests/product.request"
-import { useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 
 import "../../../styles/v1/pages/shop/components/AddToCart.scss"
 import { addOutline, close, navigateSharp, removeOutline } from "ionicons/icons"
@@ -33,6 +33,14 @@ export const AddToCart: React.FC<AddToCartProp> = ({ product }) => {
 
     
     const [quantity, setQuantity] = useState("1")
+
+    useEffect(() => {
+        if (product.variants.length == 0) {
+            // setSelectedVariantAndOptions(product.variants.map((variant) => ({ variant: variant._id, option: variant.options[0]._id })))
+            setSelectOptionPrice(product.price!)
+            setSelectOptionStock(product.stock!)
+        }
+    }, [product])
 
     const handleQuantityChange = (value: string) => {
         if (selectOptionStock <= Number(quantity)) return
@@ -88,7 +96,7 @@ export const AddToCart: React.FC<AddToCartProp> = ({ product }) => {
     }
 
     const isIncrementable = useMemo(() => {
-        if (product.variants && product.variants.length !== 0) {
+        if (product.variants.length > 0) {
             if (selectedVariantAndOptions.length !== product.variants.length) {
                 return false
             }

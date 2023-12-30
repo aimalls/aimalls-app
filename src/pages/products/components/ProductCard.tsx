@@ -20,10 +20,10 @@ export const ProductCard: React.FC<tProductCardProp> = ({ product }) => {
                         { product.productName }
                     </div>
                     <div className="product-price">
-                        Price: ₱{ product.price }
+                        Price: ₱{ product.priceRange }
                     </div>
                     <div className="product-stock">
-                        Stock: { product.stock }
+                        Stock: { product.totalStocks }
                     </div>
                 </div>
             </div>

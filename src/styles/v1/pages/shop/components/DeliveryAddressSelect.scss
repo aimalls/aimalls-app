@@ -1,0 +1,45 @@
+.current-delivery-address {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--ion-color-primary);
+    .address-type {
+        font-weight: bold;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+    }
+    .contact-info {
+        margin: 5px 0px;
+    }
+    .full-address {
+        margin: 5px 0px;
+    }
+    .default {
+        display: flex;
+        width: 100%;
+        justify-content: end;
+    }
+
+}
+
+
+#delivery-address-modal {
+    .address-type {
+        font-weight: bold;
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+    }
+    .contact-info {
+        margin: 5px 0px;
+    }
+    .full-address {
+        margin: 5px 0px;
+    }
+    .default {
+        display: flex;
+        width: 100%;
+        justify-content: end;
+    }
+}

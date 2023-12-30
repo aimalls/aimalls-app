@@ -46,7 +46,7 @@ export const Register: FC<iProps> = (props): JSX.Element => {
             const result = await processLegacyRegistrationToAPI(registrationForm)
             navigation.push("/register-success")
         } catch (error: any) {
-            presentAlert(error.response.data.error)
+            presentAlert(error.response.data)
         } finally {
             await dismiss();
         }

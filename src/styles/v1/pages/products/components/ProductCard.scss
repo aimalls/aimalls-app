@@ -9,9 +9,9 @@
         display: flex;
     }
     .product-buttons {
+        width: 100%;
         display: flex;
-        justify-content: end;
-        align-self: end;
+        justify-content: flex-end;
         ion-button {
             &::part(native) {
                 font-size: 12px;

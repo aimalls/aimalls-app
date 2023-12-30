@@ -15,7 +15,7 @@ export const compressor = (file: File, thumb?: boolean, callback?: any) => {
 
             imgElement.onload = (e: any) => {
                 const canvas = document.createElement("canvas");
-                const MAX_WIDTH = thumb ? 200: 1000;
+                const MAX_WIDTH = thumb ? 150: 400;
                 const scaleSize = MAX_WIDTH / e.target.width;
                 canvas.width = MAX_WIDTH;
                 canvas.height = e.target.height * scaleSize;

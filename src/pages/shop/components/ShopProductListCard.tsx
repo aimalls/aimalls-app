@@ -28,10 +28,25 @@ export const ShopProductListCard: React.FC<ShopProductListCardProp> = ({ product
                 </div>
                 <div className="product-rating">
                     { product.avgRating ? (
-                        <></>
-                    ): (
+                        <>
+                        {
+                        Array.from(Array(Math.round(product.avgRating)).keys()).map((index) => (
+                            <IonIcon color={"primary"} icon={ star } key={index}></IonIcon>
+                        ))
+                        }
+                        {
+                            Array.from(Array(Math.round(5 - product.avgRating)).keys()).map((index) => (
+                                <IonIcon color={"primary"} icon={ starOutline } key={`non-rating-${index}`}></IonIcon>
+                            ))
+                        }
+                        </>
+                    )
+                        
+
+                        
+                    : (
                         Array.from(Array(5).keys()).map((index) => (
-                            <IonIcon color={"primary"} icon={ starOutline } key={index}>Item {index + 1}</IonIcon>
+                            <IonIcon color={"primary"} icon={ starOutline } key={index}></IonIcon>
                         ))
                     ) }
                 </div>

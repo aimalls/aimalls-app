@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { getUserCartFromAPI } from "../../requests/user-cart.request";
+import { getUserCartGroupedBySellerFromAPI } from "../../requests/user-cart.request";
 
 export const useUserCart = () => {
-    const { data: UserCart, isLoading: isUserCartLoading, refetch } = useQuery(["user-cart"], () => getUserCartFromAPI());
+    const { data: UserCartGroupedBySeller, isLoading: isUserCartGroupedBySellerLoading, refetch } = useQuery(["user-cart-grouped-by-seller"], () => getUserCartGroupedBySellerFromAPI());
 
     return {
-        UserCart,
-        isUserCartLoading,
+        UserCartGroupedBySeller,
+        isUserCartGroupedBySellerLoading,
         refetch
     }
 }

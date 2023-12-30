@@ -41,7 +41,7 @@ export const AddNewProduct: FC = () => {
 
     const navigation = useHistory();
 
-    const { productCategories, parentCategories } = useProductCategory();
+    const { productCategories, parentCategories, isProductCategoriesLoading } = useProductCategory();
     const { userInReviewProducts, isUserInReviewProductsLoading, refetch: refetchUserProducts } = useUserInReviewProducts();
 
     const [presentAlert] = useIonAlert();
@@ -131,8 +131,11 @@ export const AddNewProduct: FC = () => {
                 <IonCard>
                     <ProductDescriptionForm onDone={(value) => setProductDescription(value)} productDescription={productDescription} />
                 </IonCard>
+
                 <IonCard>
-                    <ProductCategoryPicker onSelect={(category) => setSelectedCategory(category)} selectedCategory={selectedCategory} />
+                    { isProductCategoriesLoading ? <IonCardContent>Loading Product Categories...</IonCardContent> : (
+                        <ProductCategoryPicker onSelect={(category) => setSelectedCategory(category)} selectedCategory={selectedCategory} />
+                    ) }
                 </IonCard>
                 <IonCard>
                     <ProductSpecificationSetter onChange={(spec) => setProductSpecification(spec)} productCategory={selectedCategory} />

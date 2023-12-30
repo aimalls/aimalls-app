@@ -1,8 +1,26 @@
 #view-shop-product {
     ion-header {
-        --background: 'none';
+        position: fixed;
+        box-shadow: none;
+        background: rgba(0,0,0,0.3);
+        ion-toolbar.header-buttons {
+            ion-menu-button::part(icon) {
+                font-size: 30px;
+            }
+            ion-buttons {
+                ion-button::part(native) {
+                    color: #FFF;
+                    font-size: 16px;
+
+                }
+                ion-back-button {
+                    color: #FFF;
+                
+                }
+            }
+        }
         ion-toolbar {
-           --background: 'none';
+            --background: transparent;
         }
     }
     ion-content {

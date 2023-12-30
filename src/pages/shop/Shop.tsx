@@ -1,5 +1,5 @@
 import { FC, useEffect } from "react";
-import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow, useIonAlert, useIonLoading, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonSearchbar, IonIcon, useIonToast, IonFooter, IonTabBar, IonTabButton, IonCard, IonImg, IonCardSubtitle, IonCardContent, IonMenuButton, IonSplitPane } from "@ionic/react";
+import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow, useIonAlert, useIonLoading, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonSearchbar, IonIcon, useIonToast, IonFooter, IonTabBar, IonTabButton, IonCard, IonImg, IonCardSubtitle, IonCardContent, IonMenuButton, IonSplitPane, IonRefresher, RefresherEventDetail, IonRefresherContent } from "@ionic/react";
 import { useHistory, useParams } from "react-router";
 import "../../styles/v1/pages/shop/Shop.scss"
 import { camera, cartOutline, chatboxEllipses, heart, home, notifications, personCircle, scan, searchOutline } from "ionicons/icons";
@@ -20,7 +20,7 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
 
     const { search_string }: { search_string: string } = useParams();
     
-    const { productSearchResult, isProductSearchResultLoading } = useProductSearch(search_string)
+    const { productSearchResult, isProductSearchResultLoading, refetch: refetchProductSearchResult } = useProductSearch(search_string)
 
     const handleSearchButton = () => {
         if (!!search_string) {
@@ -28,6 +28,11 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
         } else {
             navigation.push("/shop/search")
         }
+    }
+
+    const handleRefetchProductSearchResult = async (event: CustomEvent<RefresherEventDetail>) => {
+        event.detail.complete()
+        await refetchProductSearchResult()
     }
 
    
@@ -61,21 +66,25 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent>
-                    <IonGrid>
-                        <IonRow>
-                            { productSearchResult && productSearchResult.length !==0  && !isProductSearchResultLoading ? (
-                                productSearchResult.map((product) => (
-                                    <IonCol size="6" key={product._id}>
-                                        <ShopProductListCard product={product} />
-                                    </IonCol>
-                                ))
-                            ) : isProductSearchResultLoading ? (
-                                <IonCol size="12">Loading Products...</IonCol>
-                            ) : productSearchResult?.length === 0 ? (
-                                <IonCol size="12">No Result Found.</IonCol>
-                            ) : null }
-                        </IonRow>
-                    </IonGrid>
+                    <IonRefresher slot="fixed" onIonRefresh={handleRefetchProductSearchResult}>
+                        <IonRefresherContent></IonRefresherContent>
+                    
+                    </IonRefresher>
+                        <IonGrid>
+                            <IonRow>
+                                { productSearchResult && productSearchResult.length !==0  && !isProductSearchResultLoading ? (
+                                    productSearchResult.map((product) => (
+                                        <IonCol size="6" key={product._id}>
+                                            <ShopProductListCard product={product} />
+                                        </IonCol>
+                                    ))
+                                ) : isProductSearchResultLoading ? (
+                                    <IonCol size="12">Loading Products...</IonCol>
+                                ) : productSearchResult?.length === 0 ? (
+                                    <IonCol size="12">No Result Found.</IonCol>
+                                ) : null }
+                            </IonRow>
+                        </IonGrid>
                 </IonContent>
                 <IonFooter>
                     <IonTabBar>

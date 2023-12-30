@@ -13,16 +13,23 @@ type Cart = {
 
 export interface iUserCart {
   _id: string;
+  seller: Seller;
+  shopProfile: ShopProfile;
+  items: iUserCartItem[];
+}
+
+export interface iUserCartItem {
+  _id: string;
   user: string;
   product: Product;
-  variantsAndOptions: VariantsAndOption[];
+  variantsAndOptions: VariantsAndOptions;
   quantity: number;
   createdAt: string;
   updatedAt: string;
   __v: number;
   seller: Seller;
-  shopProfile: ShopProfile;
   files: File[];
+  due: number;
 }
 
 interface File {
@@ -36,6 +43,55 @@ interface File {
   createdAt: string;
   updatedAt: string;
   __v: number;
+}
+
+interface VariantsAndOptions {
+  variant: Variant[];
+  option: Option[];
+}
+
+interface Option {
+  _id: string;
+  optionName: string;
+  price: number;
+  stock: number;
+  sku: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+interface Variant {
+  _id: string;
+  variant: string;
+  options: string[];
+  __v: number;
+}
+
+interface Product {
+  _id: string;
+  user: string;
+  productName: string;
+  productDescription: string;
+  category: string;
+  productSpecifications?: ProductSpecifications;
+  price?: number;
+  stock?: number;
+  variants: string[];
+  wholeSalePriceTier: any[];
+  weight: number;
+  width: number;
+  length: number;
+  height: number;
+  otherProductInfo: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+interface ProductSpecifications {
+  Volume: string;
 }
 
 interface ShopProfile {
@@ -64,64 +120,14 @@ interface Seller {
   __v: number;
 }
 
-interface VariantsAndOption {
-  variant: Variant;
-  option: Option;
-  _id: string;
-}
-
-interface Option {
-  _id: string;
-  optionName: string;
-  price: number;
-  stock: number;
-  sku: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
-interface Variant {
-  _id: string;
-  variant: string;
-  options: string[];
-  __v: number;
-}
-
-interface Product {
-  _id: string;
-  user: string;
-  productName: string;
-  productDescription: string;
-  category: string;
-  productSpecifications: ProductSpecifications;
-  price?: any;
-  stock?: any;
-  variants: string[];
-  wholeSalePriceTier: any[];
-  weight: number;
-  width: number;
-  length: number;
-  height: number;
-  otherProductInfo: string;
-  status: string;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
-
-interface ProductSpecifications {
-  Volume: string;
-}
-
 export const saveCartToAPI = (cart: Cart) => {
     return HTTP_API().post("/user-cart/save-user-cart", { ...cart })
         .then(response => response.data)
         .catch(err => Promise.reject(err));
 }
 
-export const getUserCartFromAPI = () => {
-    return HTTP_API().get<iUserCart[]>("/user-cart/get-user-cart")
+export const getUserCartGroupedBySellerFromAPI = () => {
+    return HTTP_API().get<iUserCart[]>("/user-cart/get-user-cart-grouped-by-seller")
         .then(response => response.data)
         .catch(err => Promise.reject(err));
 }

@@ -12,7 +12,7 @@ import { A11y, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 // import 'swiper/css/navigation';
 // import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { star, starOutline } from 'ionicons/icons';
+import { cartOutline, star, starOutline } from 'ionicons/icons';
 import { iProduct } from '../../requests/product.request';
 import { getCurrentUserRatingForTheProduct, submitProductRatingToAPI } from '../../requests/product-rating.request';
 import { useCurrentSelectedProductRatingByUser } from '../../hooks/shop/useCurrentSelectedProductRatingByUser';
@@ -37,14 +37,19 @@ const ViewShopProduct: React.FC = () => {
     return (
         <IonPage id='view-shop-product'>
             <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton defaultHref="/shop" />
+                <IonToolbar className="header-buttons">
+                    <IonButtons slot='start'>
+                    <IonBackButton></IonBackButton>
+                    </IonButtons>
+                    <IonButtons slot="end">
+                        <IonButton routerLink="/shop/cart">
+                            <IonIcon icon={ cartOutline } />
+                        </IonButton>
                     </IonButtons>
                 </IonToolbar>
                 
             </IonHeader>
-            <IonContent>
+            <IonContent fullscreen>
                 <Swiper
                     // install Swiper modules
                     modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -91,7 +96,7 @@ const ViewShopProduct: React.FC = () => {
                     <IonToolbar>
                         <IonGrid>
                             <IonRow class='ion-justify-content-end'>
-                                <IonCol size='12' style={{ display: 'flex', justifyContent: 'end' }}>
+                                <IonCol size='12' style={{ display: 'flex', justifyContent: 'flex-end' }}>
                                     <AddToCart product={product} />
                                     <BuyNow product={product} />
                                 </IonCol>
