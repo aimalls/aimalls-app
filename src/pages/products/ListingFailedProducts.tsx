@@ -13,7 +13,7 @@ export const ListingFailedProducts: React.FC = () => {
                     <IonRow class="ion-justify-content-center">
                     { userFailedReviewProducts ? userFailedReviewProducts.map((product => (
                         <IonCol size="12" key={product._id}>
-                            <ProductCard product={product} />
+                            <ProductCard product={product} onUpdate={async () => refetch()} />
                         </IonCol>
                     ))): null }
                     </IonRow>

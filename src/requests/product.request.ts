@@ -120,3 +120,9 @@ export const searchProductFromAPI = (search_string: string): Promise<iProduct[]>
         .then(response => response.data)
         .catch(err => Promise.reject(err));
 }
+
+export const updateProductStatusToAPI = (productId: iProduct["_id"], status: string) => {
+    return HTTP_API().post("/product/update-product-status", { productId, status })
+        .then(response => response.data)
+        .catch(err => Promise.reject(err));
+}

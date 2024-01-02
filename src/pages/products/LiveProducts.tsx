@@ -23,7 +23,7 @@ export const LiveProducts: React.FC = () => {
                     <IonRow class="ion-justify-content-center">
                     { userLiveProducts ? userLiveProducts.map((product => (
                         <IonCol size="12" key={product._id}>
-                            <ProductCard product={product} />
+                            <ProductCard product={product} onUpdate={ async () => await refetch() } />
                         </IonCol>
                     ))): null }
                     </IonRow>
