@@ -1,32 +1,91 @@
-import { IonBackButton, IonButton, IonButtons, IonCheckbox, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonPage, IonRow, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCheckbox, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from "@ionic/react";
 import { useHistory } from "react-router";
 import DeliverAddressSelect from "./components/DeliveryAddressSelect";
 import { iUserCart } from "../../requests/user-cart.request";
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { storefront, storefrontOutline, trashBin } from "ionicons/icons";
 
 import "../../styles/v1/pages/shop/ShopCheckout.scss"
 import { iUserAddress } from "../../requests/user-address.request";
+import useDeliveryOption from "../../hooks/delivery-option/useDeliveryOption";
+import { useUser } from "../../hooks/auth/useUser";
+import { useUserCart } from "../../hooks/shop/useUserCart";
 
 export const ShopCheckout: React.FC = () => {
 
     const navigation = useHistory();
 
     const selectedCarts = navigation.location.state as iUserCart[];
-
-    const totalDue = useMemo(() => {
-        if (!selectedCarts) return 0;
-        let total = 0;
-        selectedCarts.forEach((cart) => {
-            cart.items.forEach((item) => {
-                total += item.variantsAndOptions.option.length > 0 ? item.variantsAndOptions.option[0].price * item.quantity : item.product.price! * item.quantity;
-            })
-            
-        })
-        return total;
-    }, [selectedCarts])
-
+    
     const [selectedAddress, setSelectedAddress] = useState<iUserAddress>({} as iUserAddress)
+    
+    const { ComputedUserCartGroupedBySeller,
+        isComputedUserCartGroupedBySellerLoading,
+        refetchComputedUserCartGroupedBySeller } = useUserCart(selectedCarts, selectedAddress);
+
+
+
+    const { boxPrices, isBoxPricesLoading, refetch: refetchBoxPrices } = useDeliveryOption();
+
+
+    useEffect(() => {
+        if (Object.keys(selectedAddress).length > 0) {
+            refetchComputedUserCartGroupedBySeller()
+        }
+    }, [selectedAddress])
+    
+
+    const recommendedBoxSize = useMemo(() => {
+        if (boxPrices) {
+            const totalDimensions = selectedCarts.reduce((acc, cart) => {
+                cart.items.forEach((item) => {
+                    acc += item.product.length! * item.product.width! * item.product.height! * item.quantity;
+                })
+                return acc;
+            }, 0)
+            const maxPrice = boxPrices.reduce((max, box) => {
+                return box.price > max ? box.price : max;
+            }, 0);
+            const boxSize = boxPrices.find((box) => {
+                const maxDimension = box.dimensions.length * box.dimensions.width * box.dimensions.height;
+                return totalDimensions <= maxDimension;
+            });
+            if (boxSize) {
+                return boxSize
+            } else {
+                return maxPrice;
+            }
+        }
+    }, [boxPrices]);
+
+    const totalParcelWeight = useMemo(() => {
+        if (!selectedCarts) return 0;
+        return selectedCarts.reduce((acc, cart) => {
+            cart.items.forEach((item) => {
+                acc += item.product.weight! * item.quantity;
+            })
+            return acc;
+        }, 0)
+    }, [selectedCarts]);
+
+
+    // const getShippingFee = useCallback(() => {
+    //     selectedCarts.reduce((acc, cart) => {
+
+    //     })
+    // }, [selectedAddress, selectedCarts, recommendedBoxSize, totalParcelWeight])
+    
+
+
+
+    const processCheckout = () => {
+        let params = {
+            selectedCarts,
+            selectedAddress,
+            recommendedBoxSize,
+            totalParcelWeight,
+        }
+    }
 
     return (
         <IonPage id="shop-checkout">
@@ -40,10 +99,8 @@ export const ShopCheckout: React.FC = () => {
             </IonHeader>
             <IonContent>
                 <DeliverAddressSelect value={ selectedAddress } onChange={(address) => setSelectedAddress(address)} />
-                {/* { JSON.stringify(selectedCarts) }  */}
-                {/* { JSON.stringify(navigation.location.state) } */}
                 <IonGrid>
-                    { selectedCarts && [...selectedCarts].map((cartGroup) => (
+                    { ComputedUserCartGroupedBySeller && ComputedUserCartGroupedBySeller.selectedCarts.map((cartGroup) => (
                         <IonRow key={cartGroup._id}>
                             <IonCol size="12" class="cart-header">
                                 <div className="shop-name">
@@ -71,13 +128,25 @@ export const ShopCheckout: React.FC = () => {
                                 )) }
                                 </IonList>
                             </IonCol>
+                            <IonCol size="12">
+                                <IonItem>
+                                    <IonLabel>Due</IonLabel>
+                                    <IonLabel slot="end">₱ { cartGroup.cartDue }</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel>Shipping Fee</IonLabel>
+                                    <IonLabel slot="end">₱ { cartGroup.shippingFee.fees.total_rate }</IonLabel>
+                                </IonItem>
+                            </IonCol>
                         </IonRow>
                     )) }
                 </IonGrid>
             </IonContent>
             <IonFooter>
                 <IonToolbar>
-                    <IonTitle>Total: ₱ { totalDue }</IonTitle>
+                    { ComputedUserCartGroupedBySeller ? (
+                    <IonTitle>Total: ₱ { ComputedUserCartGroupedBySeller.totalDue }</IonTitle>
+                    ): null }
                     <IonButtons slot="end">
                         <IonButton color={"primary"} fill="solid">Place Order</IonButton>
                     </IonButtons>

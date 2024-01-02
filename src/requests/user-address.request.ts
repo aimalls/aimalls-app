@@ -19,47 +19,23 @@ export interface iUserAddress {
 }
 
 interface Barangay {
-  code: string;
-  name: string;
-  oldName: string;
-  subMunicipalityCode: boolean;
-  cityCode: boolean;
-  municipalityCode: string;
-  districtCode: boolean;
-  provinceCode: string;
-  regionCode: string;
-  islandGroupCode: string;
-  psgc10DigitCode: string;
+  id: number,
+  name: string
 }
 
 interface City {
-  code: string;
-  name: string;
-  oldName: string;
-  isCapital: boolean;
-  isCity: boolean;
-  isMunicipality: boolean;
-  provinceCode: string;
-  districtCode: boolean;
-  regionCode: string;
-  islandGroupCode: string;
-  psgc10DigitCode: string;
+  id: number,
+  name: string
 }
 
 interface Province {
-  code: string;
-  name: string;
-  regionCode: string;
-  islandGroupCode: string;
-  psgc10DigitCode: string;
+  id: number,
+  name: string
 }
 
 interface Region {
-  code: string;
-  name: string;
-  regionName: string;
-  islandGroupCode: string;
-  psgc10DigitCode: string;
+  id: number,
+  name: string
 }
 
 export const saveNewUserAddress = (params: any) => {

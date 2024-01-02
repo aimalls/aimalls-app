@@ -13,12 +13,14 @@ import { Provider } from 'react-redux'
 import { store } from './store'
 
 root.render(
-    <React.StrictMode>
+    // <React.StrictMode >
+    <>
         <QueryClientProvider client={queryClient}>
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <Provider store={store}>
             <App />
         </Provider>
         </QueryClientProvider>
-    </React.StrictMode>
+    </>
+    // </React.StrictMode>
 );

@@ -35,11 +35,20 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const user = useUser();
     const { userQuery } = user;
 
+    const { data: userData, isLoading: userDataIsLoading } = userQuery;
+
     useEffect(() => {
-        if (!!localStorage.getItem("authToken") == false) {
-            navigation.push("/login")
+        if (userDataIsLoading) return
+        if (!userDataIsLoading) {
+            if (!userData) {
+                navigation.replace("/login")
+            }
+            return
         }
-    }, [])
+        if (!!localStorage.getItem("authToken") == false) {
+            navigation.replace("/login")
+        }
+    }, [userQuery])
 
     return (
         <UserContext.Provider value={{user: userQuery.data?.data}}>

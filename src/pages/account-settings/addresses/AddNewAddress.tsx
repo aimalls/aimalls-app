@@ -79,7 +79,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                 current["barangay"] = {} as iBarangay;
                 return current;
             })
-            loadProvinces(selectedRegion.code);
+            loadProvinces(selectedRegion.id);
 
         }
 
@@ -91,7 +91,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                 current["barangay"] = {} as iBarangay;
                 return current;
             })
-            loadCities(selectedProvince.code);
+            loadCities(selectedProvince.id);
         }
 
         if (key == "city") {
@@ -101,7 +101,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                 current["barangay"] = {} as iBarangay;
                 return current;
             })
-            loadBarangays(selectedCity.code);
+            loadBarangays(selectedCity.id);
         }
     }
 
@@ -189,8 +189,8 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             onIonChange={(e) => handleAddressChange("region", e.detail.value!)}
                         >
                             { regionOptions.map((region: iRegion) => (
-                                <IonSelectOption value={region} key={region.code}>
-                                    { `${region.regionName} ${region.name}` }
+                                <IonSelectOption value={region} key={`region-${region.id}`}>
+                                    { `${region.name}` }
                                 </IonSelectOption>
                             )) }
                         </IonSelect>
@@ -204,7 +204,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             onIonChange={(e) => handleAddressChange("province", e.detail.value!)}
                         >
                             { provinceOptions.map((province: iProvince) => (
-                                <IonSelectOption value={province} key={province.code}>
+                                <IonSelectOption value={province} key={`province-${province.id}`}>
                                     { `${province.name}` }
                                 </IonSelectOption>
                             )) }
@@ -219,7 +219,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             onIonChange={(e) => handleAddressChange("city", e.detail.value!)}
                         >
                             { cityOptions.map((city: iCity) => (
-                                <IonSelectOption value={city} key={city.code}>
+                                <IonSelectOption value={city} key={`city-${city.id}`}>
                                     { `${city.name}` }
                                 </IonSelectOption>
                             )) }
@@ -234,7 +234,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
                             onIonChange={(e) => handleAddressChange("barangay", e.detail.value!)}
                         >
                             { barangayOptions.map((barangay: iBarangay) => (
-                                <IonSelectOption value={barangay} key={barangay.code}>
+                                <IonSelectOption value={barangay} key={`barangay-${barangay.id}`}>
                                     { `${barangay.name}` }
                                 </IonSelectOption>
                             )) }
