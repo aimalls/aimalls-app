@@ -19,7 +19,8 @@ export interface iCity {
 
 export interface iBarangay {
   id: number,
-  name: string
+  name: string,
+  hub_id: number,
 }
 
 
@@ -35,12 +36,7 @@ export const useAddressSelector = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
-        present("Loading Regions...")
-        setIsLoading(loading => {
-            return loading = true
-        });
-        if (isLoading) return;
-        axios.get("https://philex-api-staging-app-9so4o.ondigitalocean.app/api/v1/regions?serviceable=true")
+        axios.get("https://philex-api-staging-app-9so4o.ondigitalocean.app/api/v1/regions")
             .then(response => {
                 setRegionOptions(prev => {
                     return response.data.results;
@@ -56,11 +52,8 @@ export const useAddressSelector = () => {
     }, [])
 
     const loadProvinces = (region: number) => {
-        present("Loading Provinces...")
-        setIsLoading(true)
-        if (isLoading) return;
 
-        axios.get(`https://philex-api-staging-app-9so4o.ondigitalocean.app/api/v1/provinces?region_id=${region}&serviceable=true`)
+        axios.get(`https://philex-api-staging-app-9so4o.ondigitalocean.app/api/v1/provinces?region_id=${region}`)
             .then(response => {
                 setProvinceOptions(prev => {
                     return response.data.results;
@@ -76,10 +69,7 @@ export const useAddressSelector = () => {
     }
 
     const loadCities = (province: number) => {
-        present("Loading Cities...")
-        setIsLoading(true);
-        if (isLoading) return;
-        axios.get(`https://philex-api-staging-app-9so4o.ondigitalocean.app/api/v1/municipalities?province_id=${province}&serviceable=true`)
+        axios.get(`https://philex-api-staging-app-9so4o.ondigitalocean.app/api/v1/municipalities?province_id=${province}`)
             .then(response => {
                 setCityOptions(prev => {
                     return response.data.results;
@@ -95,10 +85,7 @@ export const useAddressSelector = () => {
     }
 
     const loadBarangays = (city_municipality: number) => {
-        present("Loading Barangays...")
-        setIsLoading(true);
-        if (isLoading) return;
-        axios.get(`https://philex-api-staging-app-9so4o.ondigitalocean.app/api/v1/barangays?municipality_id=${city_municipality}&serviceable=true`)
+        axios.get(`https://philex-api-staging-app-9so4o.ondigitalocean.app/api/v1/barangays?municipality_id=${city_municipality}`)
             .then(response => {
                 setBarangayOptions(prev => {
                     return response.data.results;

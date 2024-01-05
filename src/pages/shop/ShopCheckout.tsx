@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCheckbox, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from "@ionic/react";
+import { IonBackButton, IonButton, IonButtons, IonCheckbox, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, useIonLoading, useIonToast } from "@ionic/react";
 import { useHistory } from "react-router";
 import DeliverAddressSelect from "./components/DeliveryAddressSelect";
 import { iUserCart } from "../../requests/user-cart.request";
@@ -10,10 +10,15 @@ import { iUserAddress } from "../../requests/user-address.request";
 import useDeliveryOption from "../../hooks/delivery-option/useDeliveryOption";
 import { useUser } from "../../hooks/auth/useUser";
 import { useUserCart } from "../../hooks/shop/useUserCart";
+import { processPlaceOrderToAPI } from "../../requests/order.request";
 
 export const ShopCheckout: React.FC = () => {
 
     const navigation = useHistory();
+
+    const [present, dismiss] = useIonLoading();
+    const [presentAlert] = useIonAlert();
+    const [presentToast] = useIonToast();
 
     const selectedCarts = navigation.location.state as iUserCart[];
     
@@ -25,7 +30,6 @@ export const ShopCheckout: React.FC = () => {
 
 
 
-    const { boxPrices, isBoxPricesLoading, refetch: refetchBoxPrices } = useDeliveryOption();
 
 
     useEffect(() => {
@@ -35,55 +39,18 @@ export const ShopCheckout: React.FC = () => {
     }, [selectedAddress])
     
 
-    const recommendedBoxSize = useMemo(() => {
-        if (boxPrices) {
-            const totalDimensions = selectedCarts.reduce((acc, cart) => {
-                cart.items.forEach((item) => {
-                    acc += item.product.length! * item.product.width! * item.product.height! * item.quantity;
-                })
-                return acc;
-            }, 0)
-            const maxPrice = boxPrices.reduce((max, box) => {
-                return box.price > max ? box.price : max;
-            }, 0);
-            const boxSize = boxPrices.find((box) => {
-                const maxDimension = box.dimensions.length * box.dimensions.width * box.dimensions.height;
-                return totalDimensions <= maxDimension;
-            });
-            if (boxSize) {
-                return boxSize
-            } else {
-                return maxPrice;
-            }
-        }
-    }, [boxPrices]);
-
-    const totalParcelWeight = useMemo(() => {
-        if (!selectedCarts) return 0;
-        return selectedCarts.reduce((acc, cart) => {
-            cart.items.forEach((item) => {
-                acc += item.product.weight! * item.quantity;
-            })
-            return acc;
-        }, 0)
-    }, [selectedCarts]);
-
-
-    // const getShippingFee = useCallback(() => {
-    //     selectedCarts.reduce((acc, cart) => {
-
-    //     })
-    // }, [selectedAddress, selectedCarts, recommendedBoxSize, totalParcelWeight])
     
 
+    const processCheckout = async () => {
 
-
-    const processCheckout = () => {
-        let params = {
-            selectedCarts,
-            selectedAddress,
-            recommendedBoxSize,
-            totalParcelWeight,
+        try {
+            await present();
+            const result = await processPlaceOrderToAPI(selectedCarts, selectedAddress);
+            navigation.replace("/shop/cart/checkout/order-placed", result)
+        } catch (err: any) {
+            presentAlert(err.response.data.message)
+        } finally {
+            await dismiss();
         }
     }
 
@@ -148,7 +115,7 @@ export const ShopCheckout: React.FC = () => {
                     <IonTitle>Total: ₱ { ComputedUserCartGroupedBySeller.totalDue }</IonTitle>
                     ): null }
                     <IonButtons slot="end">
-                        <IonButton color={"primary"} fill="solid">Place Order</IonButton>
+                        <IonButton color={"primary"} fill="solid" onClick={processCheckout}>Place Order</IonButton>
                     </IonButtons>
                 </IonToolbar>
             </IonFooter>

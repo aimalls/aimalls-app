@@ -148,7 +148,7 @@ export const UpdateAddress: FC = ({}): JSX.Element => {
             await presentToast(result.message, 4000)
             console.log(params)
             await refetchAddresses()
-            navigation.push("/account-settings/addresses")
+            navigation.replace("/account-settings/addresses")
         } catch (err: any) {
             presentAlert(err.response.data.message)
         } finally {

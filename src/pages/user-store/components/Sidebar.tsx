@@ -1,13 +1,14 @@
-import { IonMenu, IonList, IonAvatar, IonItem, IonIcon, IonLabel } from "@ionic/react"
+import { IonMenu, IonList, IonAvatar, IonItem, IonIcon, IonLabel, useIonViewDidLeave, useIonViewDidEnter } from "@ionic/react"
 import { homeOutline, personCircleOutline, bagHandleOutline, heartOutline, receiptOutline, peopleOutline, logOutOutline, cog, cube, cart, cartOutline, cubeOutline, peopleCircleOutline, storefrontOutline } from "ionicons/icons"
 import { useHistory } from "react-router";
-import { processLogoutToAPI } from "../../requests/auth.request";
+import { processLogoutToAPI } from "../../../requests/auth.request";
 
-import "../../styles/v1/pages/shop/Sidebar.scss"
-import { useUser } from "../../hooks/auth/useUser";
+import "../../../styles/v1/pages/user-store/components/Sidebar.scss"
+import { useUser } from "../../../hooks/auth/useUser";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { useAccountProfile } from "../../hooks/account-profile/useAccountProfile";
+import { RootState } from "../../../store";
+import { useAccountProfile } from "../../../hooks/account-profile/useAccountProfile";
+import { useEffect } from "react";
 
 export const Sidebar: React.FC = () => {
     const navigation = useHistory();
@@ -30,6 +31,15 @@ export const Sidebar: React.FC = () => {
             console.log(err)
         }
     }
+
+    
+    // useIonViewDidEnter(() => {
+    //     console.log("entered")   
+    // }, [])
+
+    // useIonViewDidLeave(() => {
+    //     console.log("leaved")
+    // })
 
     const navigations = [
         // {
@@ -60,7 +70,7 @@ export const Sidebar: React.FC = () => {
     ]
 
     return (
-        <IonMenu contentId="shop-content">
+        <IonMenu contentId="user-store-content">
             <IonList  style={{ background: 'none' }} lines='none' id="list-menu">
                 <IonAvatar>
                     

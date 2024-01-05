@@ -1,6 +1,6 @@
-import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonLabel, IonHeader, IonToolbar, IonButtons, IonBackButton, IonPage, IonButton, IonTitle, IonContent, IonFooter, useIonToast, IonFabButton, IonIcon, IonFab } from "@ionic/react"
+import { IonTabs, IonRouterOutlet, IonTabBar, IonTabButton, IonLabel, IonHeader, IonToolbar, IonButtons, IonBackButton, IonPage, IonButton, IonTitle, IonContent, IonFooter, useIonToast, IonFabButton, IonIcon, IonFab, IonRoute, IonTab } from "@ionic/react"
 import { IonReactRouter } from "@ionic/react-router"
-import { Redirect, Route, useHistory } from "react-router"
+import { Redirect, Route, Switch, useHistory } from "react-router"
 import { DelistedProducts } from "./DelistedProducts"
 import { InReviewProducts } from "./InReviewProducts"
 import { ListingFailedProducts } from "./ListingFailedProducts"
@@ -42,56 +42,42 @@ export const ProductsV2: React.FC = () => {
     }
 
     return (
-        <IonPage id="products">
+        
+        <IonReactRouter>
             <IonHeader>
                 <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton defaultHref="/shop"></IonBackButton>
-                    </IonButtons>
-                    Products
+                    <IonTabBar>
+                        <IonTabButton tab="live" href="/user-store/products/live">
+                            <IonLabel>Live</IonLabel>
+                        </IonTabButton>
+                        <IonTabButton tab="reviewing" href="/user-store/products/reviewing">
+                            <IonLabel>Reviewing</IonLabel>
+                        </IonTabButton>
+                        <IonTabButton tab="failed" href="/user-store/products/failed">
+                            <IonLabel>Failed</IonLabel>
+                        </IonTabButton>
+                        <IonTabButton tab="delisted" href="/user-store/products/delisted">
+                            <IonLabel>Delisted</IonLabel>
+                        </IonTabButton>
+                    </IonTabBar>
                 </IonToolbar>
-                
             </IonHeader>
-                <IonTabBar slot="top">
-                    <IonTabButton tab="live" href="/products/live">
-                        <IonLabel>Live</IonLabel>
-                    </IonTabButton>
-
-                    <IonTabButton tab="reviewing" href="/products/reviewing">
-                        <IonLabel>Reviewing</IonLabel>
-                    </IonTabButton>
-
-                    <IonTabButton tab="failed" href="/products/failed">
-                        <IonLabel>Failed</IonLabel>
-                    </IonTabButton>
-
-                    <IonTabButton tab="delisted" href="/products/delisted">
-                        <IonLabel>Delisted</IonLabel>
-                    </IonTabButton>
-                    
-                </IonTabBar>
-                <IonContent>
-                    <IonRouterOutlet>
-                        
-                        <Redirect exact path="/products" to="/products/live" />
-                        <Route path="/products/live" render={() => <LiveProducts />} exact={true} />
-                        <Route path="/products/reviewing" render={() => <InReviewProducts />} exact={true} />
-                        <Route path="/products/failed" render={() => <ListingFailedProducts />} exact={true} />
-                        <Route path="/products/delisted" render={() => <DelistedProducts />} exact={true} />
-                    </IonRouterOutlet>
-
-                    <IonFab slot="fixed" vertical="bottom" horizontal="end">
-                        <IonFabButton routerLink="/products/new">
-                            <IonIcon icon={ addOutline }></IonIcon>
-                        </IonFabButton>
-                    </IonFab>
-                </IonContent>
-            {/* <IonFooter>
-            <IonToolbar>
-                <IonButton expand="block" color={"primary"} fill="solid" onClick={() => handleNewProduct()}>New</IonButton>
-              </IonToolbar>
-            </IonFooter> */}
-        </IonPage>
+            <IonContent>
+                
+                {/* <IonTabBar slot="top">
+                <IonTabButton tab="home" href="/home">
+            <IonLabel>Listen now</IonLabel>
+          </IonTabButton>
+                </IonTabBar> */}
+                <IonRouterOutlet>
+                    <Redirect exact path="/user-store/products" to="/user-store/products/live" />
+                    <Route path="/user-store/products/live" component={LiveProducts} exact={true} />
+                    <Route path="/user-store/products/reviewing" component={InReviewProducts} exact={true} />
+                    <Route path="/user-store/products/failed" component={ListingFailedProducts} exact={true} />
+                    <Route path="/user-store/products/delisted" component={DelistedProducts} exact={true} />
+                </IonRouterOutlet>
+            </IonContent>
+        </IonReactRouter>
         
     )
 }

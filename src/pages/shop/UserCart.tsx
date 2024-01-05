@@ -10,11 +10,13 @@ import { useHistory } from "react-router"
 
 export const UserCart: React.FC = () => {
 
-    const { UserCartGroupedBySeller, isUserCartGroupedBySellerLoading, refetch: refetchUserCart } = useUserCart()
 
     const navigation = useHistory();
     
     const [selectedCarts, setSelectedCarts] = useState<iUserCart[]>([])
+
+    
+    const { UserCartGroupedBySeller, isUserCartGroupedBySellerLoading, refetch: refetchUserCart } = useUserCart()
     
 
     const totalDue = useMemo(() => {
@@ -145,6 +147,13 @@ export const UserCart: React.FC = () => {
             </IonHeader>
             <IonContent>
                 <IonGrid>
+                    { UserCartGroupedBySeller && UserCartGroupedBySeller.length === 0 ? (
+                        <IonRow>
+                            <IonCol size="12">
+                                Cart is empty.
+                            </IonCol>
+                        </IonRow>
+                    ): null }
                     { UserCartGroupedBySeller && [...UserCartGroupedBySeller].map((cartGroup) => (
                         <IonRow key={cartGroup._id}>
                             <IonCol size="12" class="cart-header">

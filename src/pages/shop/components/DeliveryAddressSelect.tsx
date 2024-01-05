@@ -8,7 +8,7 @@ import { arrowBack } from "ionicons/icons"
 
 type DeliveryAddressSelectProps = {
     value: iUserAddress
-    onChange: (address: iUserAddress) => void
+    onChange?: (address: iUserAddress) => void
 }
 
 export const DeliverAddressSelect: React.FC<DeliveryAddressSelectProps> = ({ onChange, value: defaultAddress }) => {
@@ -31,7 +31,7 @@ export const DeliverAddressSelect: React.FC<DeliveryAddressSelectProps> = ({ onC
     }, [userAddresses]);
 
     useEffect(() => {
-        if (defaultDeliveryAddress) {
+        if (defaultDeliveryAddress && onChange) {
             // setCurrentDeliveryAddress(defaultDeliveryAddress._id)
             onChange(defaultDeliveryAddress)
         }
@@ -40,7 +40,8 @@ export const DeliverAddressSelect: React.FC<DeliveryAddressSelectProps> = ({ onC
     const addressChangeModalRef = useRef<HTMLIonModalElement>(null);
 
     const handleChangeDeliverAddress = (address: iUserAddress) => {
-        onChange(address)
+        if (onChange) onChange(address)
+
         addressChangeModalRef.current?.dismiss()
     }
 
@@ -52,9 +53,11 @@ export const DeliverAddressSelect: React.FC<DeliveryAddressSelectProps> = ({ onC
                         <div className="type">
                            Address
                         </div>
+                        { onChange ? (
                         <div className="change-button">
                             <IonButton fill="clear" size="small" id="delivery-address-change-button">Change</IonButton>
                         </div>
+                        ): null }
                     </div>
                     <div className="contact-info">
                         { `${defaultAddress.contactName} | ${defaultAddress.contactNumber}` }
@@ -78,7 +81,7 @@ export const DeliverAddressSelect: React.FC<DeliveryAddressSelectProps> = ({ onC
                     
                 </div>
             ): null }
-            { defaultAddress._id ? (
+            { defaultAddress._id && onChange ? (
                 <IonModal
                     ref={ addressChangeModalRef }
                     trigger="delivery-address-change-button"

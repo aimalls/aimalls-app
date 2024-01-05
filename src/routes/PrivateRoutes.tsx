@@ -19,6 +19,9 @@ import ViewShopProduct from "../pages/shop/ViewShopProduct"
 import { UserCart } from "../pages/shop/UserCart"
 import ShopProfile from "../pages/account-settings/shop-profile/ShopProfile"
 import ShopCheckout from "../pages/shop/ShopCheckout"
+import OrderPlaced from "../pages/shop/OrderPlaced"
+import OrderDetail from "../pages/shop/OrderDetail"
+import UserStore from "../pages/user-store/UserStore"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
@@ -29,9 +32,9 @@ export const PrivateRoutes = () => {
             </Route>
 
 
-            <Route path="/products">
+            {/* <Route path="/products">
                 <ProductsV2 />
-            </Route>
+            </Route> */}
             <Route path="/products/new">
                 <AddNewProduct />
             </Route>
@@ -90,6 +93,19 @@ export const PrivateRoutes = () => {
             <Route exact path="/shop/cart/checkout">
                 <ShopCheckout />
             </Route>
+            <Route exact path="/shop/cart/checkout/order-placed">
+                <OrderPlaced />
+            </Route>
+            <Route exact path="/shop/order/:order_id/order-detail">
+                <OrderDetail />
+            </Route>
+
+            <Route path="/user-store">
+                <UserStore />
+            </Route>
+
+
+
 
         </UserContextProvider>
     )

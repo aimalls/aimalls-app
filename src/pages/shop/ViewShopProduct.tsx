@@ -39,7 +39,7 @@ const ViewShopProduct: React.FC = () => {
             <IonHeader>
                 <IonToolbar className="header-buttons">
                     <IonButtons slot='start'>
-                    <IonBackButton></IonBackButton>
+                    <IonBackButton defaultHref='/shop'></IonBackButton>
                     </IonButtons>
                     <IonButtons slot="end">
                         <IonButton routerLink="/shop/cart">

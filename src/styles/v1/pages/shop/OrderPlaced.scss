@@ -1,0 +1,33 @@
+#order-placed {
+    ion-header {
+        background: none;
+        box-shadow: none;
+        
+    }
+    ion-content {
+        .order-placed-success-image {
+            display: flex;
+            justify-content: center;
+            ion-img {
+                width: 200px;
+                height: 200px;
+            }
+        }
+        .order-placed-success-text {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            font-size: 25px;
+            font-weight: 600;
+        }
+        .order-placed-success-sub-text {
+            text-align: center;
+        }
+        .action-buttons {
+            margin-top: 30px;
+            ion-button {
+                margin-bottom: 20px;
+            }
+        }
+    }
+}

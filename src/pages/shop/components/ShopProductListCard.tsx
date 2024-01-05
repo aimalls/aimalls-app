@@ -13,8 +13,6 @@ type ShopProductListCardProp = {
     product: iProductWithRating
 }
 
-
-
 export const ShopProductListCard: React.FC<ShopProductListCardProp> = ({ product }) => {
     return (
         <IonCard className="shop-product-list-card" routerLink={`/shop/product/${product._id}/view`}>

@@ -1,0 +1,34 @@
+ion-menu::part(container) {
+    color: var(--ion-color-primary);
+    padding: 10px;
+}
+
+ion-list#list-menu {
+    ion-item::part(native) {
+        border: none;
+        background: none;
+    }
+    ion-item.active::part(native) {
+        background: #615654;
+        color: var(--ion-color-primary);
+        position: relative;
+        border-radius: 5px;
+        
+    }
+    ion-item:not(.active) {
+        z-index: 1000;
+    }
+    ion-item:not(.active)::part(native) {
+        color: rgb(77, 77, 77);
+    }
+    ion-item.active {
+        overflow: visible;
+    }
+    ion-item::part(detail-icon) {
+        color: #FFF;
+    }
+}
+
+.greetings {
+    text-align: center;
+}

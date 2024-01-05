@@ -133,7 +133,7 @@ export const AddNewAddress: FC<iProps> = (props): JSX.Element => {
             const result = await saveNewUserAddress(params);
             await presentToast(result.message, 4000)
             await refetchAddresses()
-            navigation.push("/account-settings/addresses")
+            navigation.replace("/account-settings/addresses")
         } catch (err: any) {
             presentAlert(err.response.data.message)
         } finally {

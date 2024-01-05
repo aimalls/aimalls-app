@@ -19,7 +19,7 @@ export const LiveProducts: React.FC = () => {
                     <IonRefresherContent></IonRefresherContent>
                 </IonRefresher>
                 <IonGrid>
-                    <IonLoading isOpen={ isUserLiveProductsLoading }></IonLoading>
+                    {/* <IonLoading isOpen={ isUserLiveProductsLoading }></IonLoading> */}
                     <IonRow class="ion-justify-content-center">
                     { userLiveProducts ? userLiveProducts.map((product => (
                         <IonCol size="12" key={product._id}>

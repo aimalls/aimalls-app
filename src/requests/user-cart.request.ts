@@ -10,6 +10,7 @@ type Cart = {
     productId: string;
     quantity: number;
     variantsAndOptions: selectedVariantAndOption[];
+    status: string;
 }
 
 export interface iUserCart {
