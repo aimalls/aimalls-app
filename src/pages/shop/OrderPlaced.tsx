@@ -2,13 +2,13 @@ import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonGrid, IonH
 import { useHistory } from "react-router";
 import orderPlacedSuccess from "../../assets/images/order-placed-success.gif"
 import "../../styles/v1/pages/shop/OrderPlaced.scss"
-import { iOrderData } from "../../requests/order.request";
+import { Data, iOrderData } from "../../requests/order.request";
 
 export const OrderPlaced: React.FC = () => {
 
     const navigation = useHistory();
 
-    const { message, data } = navigation.location.state as iOrderData;
+    const { message, data } = navigation.location.state as iOrderData<Data>;
 
     
 

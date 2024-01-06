@@ -112,7 +112,7 @@ export const AddNewProduct: FC = () => {
             <IonHeader>
                 <IonToolbar>
                     <IonButtons style={{ position: 'fixed', top: '0', left: '0', height: '100%' }}>
-                        <IonBackButton defaultHref="/products"></IonBackButton>
+                        <IonBackButton defaultHref="/user-store/products"></IonBackButton>
                     </IonButtons>
                     <IonTitle className="ion-text-center">Add New Product</IonTitle>
 

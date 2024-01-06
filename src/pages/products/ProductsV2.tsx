@@ -11,6 +11,7 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { RootState } from "../../store"
 import { addOutline } from "ionicons/icons"
+import { useUserProduct } from "../../hooks/product/useUserProduct"
 
 export const ProductsV2: React.FC = () => {
 
@@ -21,7 +22,8 @@ export const ProductsV2: React.FC = () => {
 
     const { shopName } = useSelector((state: RootState) => state.shopProfileStore)
 
-  
+
+  const { userProductsCount, isUserProductsCountLoading, refetchUserProductsCount } = useUserProduct();
 
     const handleNewProduct = () => {
         if (!ShopProfileIsLoading) {
@@ -46,29 +48,25 @@ export const ProductsV2: React.FC = () => {
         <IonReactRouter>
             <IonHeader>
                 <IonToolbar>
+                    { userProductsCount ? (
                     <IonTabBar>
                         <IonTabButton tab="live" href="/user-store/products/live">
-                            <IonLabel>Live</IonLabel>
+                            <IonLabel>Live({ userProductsCount["Live"] ?? 0 })</IonLabel>
                         </IonTabButton>
                         <IonTabButton tab="reviewing" href="/user-store/products/reviewing">
-                            <IonLabel>Reviewing</IonLabel>
+                            <IonLabel>Reviewing({ userProductsCount["In Review"] ?? 0 })</IonLabel>
                         </IonTabButton>
                         <IonTabButton tab="failed" href="/user-store/products/failed">
-                            <IonLabel>Failed</IonLabel>
+                            <IonLabel>Failed({ userProductsCount["Failed"] ?? 0 })</IonLabel>
                         </IonTabButton>
                         <IonTabButton tab="delisted" href="/user-store/products/delisted">
-                            <IonLabel>Delisted</IonLabel>
+                            <IonLabel>Delisted({userProductsCount["Deactivated"] ?? 0 })</IonLabel>
                         </IonTabButton>
                     </IonTabBar>
+                    ): null }
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                
-                {/* <IonTabBar slot="top">
-                <IonTabButton tab="home" href="/home">
-            <IonLabel>Listen now</IonLabel>
-          </IonTabButton>
-                </IonTabBar> */}
                 <IonRouterOutlet>
                     <Redirect exact path="/user-store/products" to="/user-store/products/live" />
                     <Route path="/user-store/products/live" component={LiveProducts} exact={true} />
@@ -76,6 +74,12 @@ export const ProductsV2: React.FC = () => {
                     <Route path="/user-store/products/failed" component={ListingFailedProducts} exact={true} />
                     <Route path="/user-store/products/delisted" component={DelistedProducts} exact={true} />
                 </IonRouterOutlet>
+
+                <IonFab slot="fixed" vertical="bottom" horizontal="end" style={{ marginBottom: "65px" }}>
+                    <IonFabButton onClick={() => navigation.replace("/products/new")}>
+                        <IonIcon icon={ addOutline }></IonIcon>
+                    </IonFabButton>
+                </IonFab>
             </IonContent>
         </IonReactRouter>
         

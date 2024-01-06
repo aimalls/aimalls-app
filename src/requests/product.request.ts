@@ -84,6 +84,9 @@ export interface iSearchSuggestion {
     objectID: string
 }
 
+export type statusesCount = { [key: string]: string }
+
+
 export const saveNewProductToAPI = (product: any) => {
     const headers = { 'Content-Type': 'multipart/form-data' };
     return HTTP_API({ headers }).post("/product/save-new-product", product)
@@ -123,6 +126,12 @@ export const searchProductFromAPI = (search_string: string): Promise<iProduct[]>
 
 export const updateProductStatusToAPI = (productId: iProduct["_id"], status: string) => {
     return HTTP_API().post("/product/update-product-status", { productId, status })
+        .then(response => response.data)
+        .catch(err => Promise.reject(err));
+}
+
+export const getUserProductsCountFromAPI = () => {
+    return HTTP_API().get<statusesCount>("/product/get-user-products-count")
         .then(response => response.data)
         .catch(err => Promise.reject(err));
 }

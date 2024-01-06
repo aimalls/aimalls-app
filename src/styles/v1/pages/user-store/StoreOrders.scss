@@ -1,6 +1,24 @@
 #store-orders {
     height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .tabbar-toolbar {
+        width: 100%;
+        .scrollable-toolbar {
+            display: flex;
+            // white-space: nowrap;
+            justify-content: flex-start;
+            overflow-x: auto;
+
+            &::-webkit-scrollbar {
+                width: 0;
+                height: 0px;
+            }
+        
+
+            ion-tab-button {
+                &::part(native) {
+                    padding: 0px 20px;
+                }
+            }
+        }
+    }
 }

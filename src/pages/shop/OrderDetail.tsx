@@ -5,7 +5,7 @@ import { useOrder } from "../../hooks/order/useOrder";
 import "../../styles/v1/pages/shop/order/OrderDetail.scss"
 import { useMemo } from "react";
 import { airplaneOutline, cartOutline, checkmarkDoneOutline, closeOutline, paperPlaneOutline, storefrontOutline } from "ionicons/icons";
-import { iOrderData, processCancelOrderToAPI } from "../../requests/order.request";
+import { Data, iOrderData, processCancelOrderToAPI } from "../../requests/order.request";
 import DeliverAddressSelect from "./components/DeliveryAddressSelect";
 const orderStatuses = [
     {
@@ -47,7 +47,7 @@ export const OrderDetail: React.FC = () => {
 
     const { Order, isOrderLoading, refetch: refetchOrder } = useOrder(order_id);
 
-    const order: iOrderData['data'] = Order?.data;
+    const order: iOrderData<Data>['data'] = Order?.data;
     
     const orderStatus = useMemo(() => {
         if (order) {

@@ -15,7 +15,7 @@ import { DelistedProducts } from "../products/DelistedProducts";
 import { InReviewProducts } from "../products/InReviewProducts";
 import { ListingFailedProducts } from "../products/ListingFailedProducts";
 import { LiveProducts } from "../products/LiveProducts";
-import { StoreOrders } from "./StoreOrders";
+import { StoreOrders } from "./orders/StoreOrders";
 
 export const UserStore: React.FC = () => {
 
@@ -52,7 +52,7 @@ export const UserStore: React.FC = () => {
                             {/* <Redirect exact path="/user-store/products" to="/user-store/products/live" /> */}
                             
                         </Route>
-                        <Route path="/user-store/orders" render={() => <StoreOrders />} exact={true} />
+                        <Route path="/user-store/orders" render={() => <StoreOrders />} />
                         <Route path="/user-store/messages" render={() => <StoreMessages />} exact={true} />
                         <Route path="/user-store/notifications" render={() => <StoreNotifications />} exact={true} />
 

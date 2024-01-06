@@ -1,12 +1,23 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonGrid, IonRow } from "@ionic/react";
+import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonRow } from "@ionic/react";
 import "../../styles/v1/pages/user-store/UserStoreHome.scss"
 import { useShopProfile } from "../../hooks/shop-profile/useShopProfile";
+import useStoreOrder from "../../hooks/order/useStoreOrder";
+import { useUserProduct } from "../../hooks/product/useUserProduct";
 export const UserStoreHome: React.FC = () => {
 
     const { ShopProfile, ShopProfileIsLoading } = useShopProfile();
 
+    const { pending, awaitingShipment,
+        awaitingCollection,
+        inTransit,
+        delivered,
+        completed,
+        cancelled } = useStoreOrder();
+
+    const { userProductsCount, isUserProductsCountLoading, refetchUserProductsCount } = useUserProduct();
+
     return (
-        <div id="user-store-home">
+            <IonContent id="user-store-home">
             <IonGrid>
                     { ShopProfile ? (
                         <IonRow>
@@ -21,23 +32,31 @@ export const UserStoreHome: React.FC = () => {
                                     <IonCardContent>
                                         <div className="transactions">
                                             <div className="item">
-                                                <div className="count">5</div>
+                                                <div className="count">{ pending.length }</div>
                                                 <div className="status">New Order</div>
                                             </div>
                                             <div className="item">
-                                                <div className="count">5</div>
+                                                <div className="count">{ awaitingShipment.length }</div>
                                                 <div className="status">To Ship</div>
                                             </div>
                                             <div className="item">
-                                                <div className="count">20</div>
+                                                <div className="count">{ awaitingCollection.length }</div>
                                                 <div className="status">Shipped</div>
                                             </div>
                                             <div className="item">
-                                                <div className="count">30</div>
+                                                <div className="count">{ inTransit.length }</div>
+                                                <div className="status">In Transit</div>
+                                            </div>
+                                            <div className="item">
+                                                <div className="count">{ delivered.length }</div>
                                                 <div className="status">Delivered</div>
                                             </div>
                                             <div className="item">
-                                                <div className="count">5</div>
+                                                <div className="count">{ completed.length }</div>
+                                                <div className="status">Completed</div>
+                                            </div>
+                                            <div className="item">
+                                                <div className="count">{ cancelled.length }</div>
                                                 <div className="status">Cancelled</div>
                                             </div>
                                         </div>
@@ -50,24 +69,26 @@ export const UserStoreHome: React.FC = () => {
                                         <IonCardTitle>Store Products</IonCardTitle>
                                     </IonCardHeader>
                                     <IonCardContent>
+                                        { userProductsCount ? (
                                         <div className="products">
                                             <div className="item">
-                                                <div className="count">5</div>
+                                                <div className="count">{ userProductsCount["Live"] ?? 0 }</div>
                                                 <div className="status">Live</div>
                                             </div>
                                             <div className="item">
-                                                <div className="count">5</div>
+                                                <div className="count">{ userProductsCount["In Review"] ?? 0 }</div>
                                                 <div className="status">Reviewing</div>
                                             </div>
                                             <div className="item">
-                                                <div className="count">20</div>
+                                                <div className="count">{ userProductsCount["Failed"] ?? 0 }</div>
                                                 <div className="status">Failed</div>
                                             </div>
                                             <div className="item">
-                                                <div className="count">20</div>
+                                                <div className="count">{ userProductsCount["Deactivated"] ?? 0 }</div>
                                                 <div className="status">Deactivated</div>
                                             </div>
                                         </div>
+                                        ): null }
                                     </IonCardContent>
                                 </IonCard>
                             </IonCol>
@@ -75,7 +96,7 @@ export const UserStoreHome: React.FC = () => {
 
                     ): null }
             </IonGrid>
-        </div>   
+            </IonContent>
     )
 }
 
