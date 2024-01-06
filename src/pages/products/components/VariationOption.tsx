@@ -1,17 +1,18 @@
 import { FC, useEffect, useState } from "react";
-import { iVariationOption } from "./SalesInformation";
+import { iVariation, iVariationOption } from "./SalesInformation";
 import { IonButton, IonIcon, IonInput } from "@ionic/react";
 import { close } from "ionicons/icons";
 import SingleImageUpload from "../../../components/SingleImageUpload";
 
 interface iVariationOptionProps {
+    variations: iVariation[]
     option: iVariationOption,
     index: number,
     onOptionRemove: (optionIndex: number) => void,
     onChange: (option: iVariationOption, index: number) => void
 }
 
-export const VariationOption: FC<iVariationOptionProps> = ({ option, index, onOptionRemove, onChange }) => {
+export const VariationOption: FC<iVariationOptionProps> = ({ option, index, onOptionRemove, onChange, variations }) => {
 
    
 
@@ -53,26 +54,30 @@ export const VariationOption: FC<iVariationOptionProps> = ({ option, index, onOp
                 style={{ marginBottom: '10px' }}
                 onIonInput={({ detail }) => handleOptionChange("name", detail.value!)}
             ></IonInput>
-            <IonInput
-                type="number"
-                label="Price *"
-                value={option.price}
-                placeholder="Input Price"
-                labelPlacement="floating"
-                fill="solid"
-                style={{ marginBottom: '10px' }}
-                onIonInput={({ detail }) => handleOptionChange("price", detail.value!)}
-            ></IonInput>
-            <IonInput
-                type="number"
-                label="Stock *"
-                value={option.stock}
-                placeholder="Input Stock"
-                labelPlacement="floating"
-                fill="solid"
-                style={{ marginBottom: '10px' }}
-                onIonInput={({ detail }) => handleOptionChange("stock", detail.value!)}
-            ></IonInput>
+            { option.price !== undefined ? (
+                <>
+                    <IonInput
+                        type="number"
+                        label="Price *"
+                        value={option.price}
+                        placeholder="Input Price"
+                        labelPlacement="floating"
+                        fill="solid"
+                        style={{ marginBottom: '10px' }}
+                        onIonInput={({ detail }) => handleOptionChange("price", detail.value!)}
+                    ></IonInput>
+                    <IonInput
+                        type="number"
+                        label="Stock *"
+                        value={option.stock}
+                        placeholder="Input Stock"
+                        labelPlacement="floating"
+                        fill="solid"
+                        style={{ marginBottom: '10px' }}
+                        onIonInput={({ detail }) => handleOptionChange("stock", detail.value!)}
+                    ></IonInput>
+                </>
+            ): null }
             <IonInput
                 type="text"
                 label="SKU (Optional)"

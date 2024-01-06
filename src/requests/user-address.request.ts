@@ -20,7 +20,8 @@ export interface iUserAddress {
 
 interface Barangay {
   id: number,
-  name: string
+  name: string,
+  hub_id: number
 }
 
 interface City {

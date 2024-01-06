@@ -22,8 +22,8 @@ export interface iVariationOption {
     id: string,
     name: string
     image: File | null,
-    price: string | null,
-    stock: string | null,
+    price?: string | null,
+    stock?: string | null,
     sku: string
 }
 
@@ -83,6 +83,19 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone, productSa
             }
         ]
     }
+
+    const variationDefault2 = {
+        id: makeid(5),
+        name: '',
+        options: [
+            {
+                id: makeid(7),
+                name: '',
+                image: null,
+                sku: ''
+            }
+        ]
+    }
     
     useEffect(() => {
         if (variationsEnabled) {
@@ -101,7 +114,11 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone, productSa
 
     const handleAddMoreVariation = () => {
         setVariations(current => {
-            return [...current, variationDefault]
+            if (current.length < 1) {
+                return [...current, variationDefault]
+            } else {
+                return [...current, variationDefault2]
+            }
             
         })
     }
@@ -124,13 +141,23 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone, productSa
         setVariations((current) => {
             let curr = [...current];
             let currentOptions = current[index].options;
-            const newOption = {
+            let newOption;
+            if (current.length <= 1) {
+                newOption = {
+                        id: makeid(7),
+                        name: '',
+                        image: null,
+                        price: null,
+                        stock: null,
+                        sku: ''
+                }
+            } else {
+                newOption = {
                     id: makeid(7),
-                    name: '',
-                    image: null,
-                    price: null,
-                    stock: null,
-                    sku: ''
+                        name: '',
+                        image: null,
+                        sku: ''
+                }
             }
             let newOptions = [...currentOptions, newOption]
             
@@ -291,6 +318,7 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone, productSa
                                         { variations.map((variation, index) => (
                                             <div key={`variation-${variation.id}`}>
                                                 <VariationForm 
+                                                    variations={variations}
                                                     variationProp={variation} 
                                                     onVariationChange={(variation) => handleVariationChange(variation, index)} 
                                                     index={index}
@@ -305,6 +333,7 @@ export const SalesInformation: FC<iSalesInformationProps> = ({ onDone, productSa
                                         >Add More Variation</IonButton>
                                     </IonCol>
                                 ): (
+                                    
                                     <IonCol>
                                         <IonInput
                                             value={productPrice}

@@ -6,6 +6,7 @@ import VariationOption from "./VariationOption"
 
 
 interface iVariationFormProps {
+    variations: iVariation[]
     variationProp: iVariation,
     onVariationChange: (variation: iVariation) => void,
     index: number,
@@ -14,7 +15,7 @@ interface iVariationFormProps {
     onOptionRemove: (optionId: string) => void
 }
 
-const VariationForm: FC<iVariationFormProps> = ({variationProp, onVariationChange, index, onRemove, onOptionAdd, onOptionRemove}) => {
+const VariationForm: FC<iVariationFormProps> = ({variationProp, onVariationChange, index, onRemove, onOptionAdd, onOptionRemove, variations}) => {
 
     const [variation, setVariation] = useState<iVariation>(variationProp)
 
@@ -95,7 +96,8 @@ const VariationForm: FC<iVariationFormProps> = ({variationProp, onVariationChang
                 ></IonInput>
                 {/* { JSON.stringify(variation.options) } */}
                 {variation.options.map((option, optionIndex) => (
-                    <VariationOption 
+                    <VariationOption
+                        variations={variations}
                         key={`variation-option-${optionIndex}`} 
                         option={option} 
                         index={optionIndex}

@@ -92,7 +92,7 @@ export const AddNewProduct: FC = () => {
             
             await presentToast(result.message, 5000);
             await refetchUserProducts();
-            navigation.replace("/products/reviewing")
+            navigation.replace("/user-store/products/reviewing")
 
         } catch (err: any) {
             presentAlert(err.response.data.message)

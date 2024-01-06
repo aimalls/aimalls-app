@@ -132,7 +132,7 @@ export const OrderDetail: React.FC = () => {
                                         </div>
                                         <div className="shipping-detail">
                                             <div className="shipping-type">
-                                                { detail.shipping.bookingDetail.type }
+                                                { detail.shipping.bookingDetail.delivery_type }
                                             </div>
                                             <div className="shipping-courier">
                                                 { detail.shipping.courier }

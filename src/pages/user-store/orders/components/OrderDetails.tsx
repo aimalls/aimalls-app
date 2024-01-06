@@ -30,7 +30,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ order }) => {
                         </div>
                         <div className="shipping-detail">
                             <div className="shipping-type">
-                                { order.orderDetail.shipping.bookingDetail.type }
+                                { order.orderDetail.shipping.bookingDetail.delivery_type }
                             </div>
                             <div className="shipping-courier">
                                 { order.orderDetail.shipping.courier }

@@ -83,8 +83,10 @@ export const AddToCart: React.FC<AddToCartProp> = ({ product }) => {
         } else {
             setSelectedVariantAndOptions([...selectedVariantAndOptions, { variant, option }])
         }
-        setSelectOptionPrice(product.variants?.find((_variant) => _variant._id === variant)?.options.find((_option) => _option._id === option)?.price || 0)
-        setSelectOptionStock(product.variants?.find((_variant) => _variant._id === variant)?.options.find((_option) => _option._id === option)?.stock || 0)
+        const foundPrice = product.variants?.find((_variant) => _variant._id === variant)?.options.find((_option) => _option._id === option && _option.price !== null)?.price
+        if (!foundPrice) return
+        setSelectOptionPrice(product.variants?.find((_variant) => _variant._id === variant)?.options.find((_option) => _option._id === option && _option.price !== null)?.price || 0)
+        setSelectOptionStock(product.variants?.find((_variant) => _variant._id === variant)?.options.find((_option) => _option._id === option && _option.stock !== null)?.stock || 0)
     }
 
     const isOptionSelected = (variant: string, option: string) => {

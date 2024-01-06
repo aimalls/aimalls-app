@@ -82,7 +82,7 @@ export const AccountProfile: FC<iProps> = (props): JSX.Element => {
             await present();
             const result = await saveAccountProfileToAPI(params)            
             await presentToast(result.message, 5000)
-            navigation.replace("/account-settings")
+            navigation.replace("/shop")
         } catch (err: any) {
             // console.log(err.response.data.mesasge)
             presentToast(err.response.data.message, 5000)
