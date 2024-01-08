@@ -49,7 +49,7 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
                             <IonButton routerLink="/shop/cart">
                                 <IonIcon icon={ cartOutline } />
                             </IonButton>
-                            <IonButton>
+                            <IonButton routerLink="/chat">
                                 <IonIcon icon={ chatboxEllipses } />
                             </IonButton>
                         </IonButtons>

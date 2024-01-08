@@ -1,10 +1,10 @@
-import { IonBackButton, IonButton, IonButtons, IonCheckbox, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonPage, IonRow, IonTitle, IonToolbar } from "@ionic/react"
+import { IonBackButton, IonButton, IonButtons, IonCheckbox, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonItemDivider, IonItemOption, IonItemOptions, IonItemSliding, IonList, IonPage, IonRow, IonTitle, IonToolbar, useIonAlert, useIonLoading, useIonToast } from "@ionic/react"
 import { useUserCart } from "../../hooks/shop/useUserCart"
 
 import "../../styles/v1/pages/shop/UserCart.scss"
 import { storefrontOutline, trash, trashBin } from "ionicons/icons"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { iUserCart, iUserCartItem } from "../../requests/user-cart.request"
+import { iUserCart, iUserCartItem, processRemoveCartItemToAPI } from "../../requests/user-cart.request"
 import { CheckboxCustomEvent } from "@ionic/core"
 import { useHistory } from "react-router"
 
@@ -14,6 +14,9 @@ export const UserCart: React.FC = () => {
     const navigation = useHistory();
     
     const [selectedCarts, setSelectedCarts] = useState<iUserCart[]>([])
+    const [present, dismiss] = useIonLoading(); 
+    const [presentAlert] = useIonAlert();
+    const [presentToast] = useIonToast();
 
     
     const { UserCartGroupedBySeller, isUserCartGroupedBySellerLoading, refetch: refetchUserCart } = useUserCart()
@@ -133,6 +136,19 @@ export const UserCart: React.FC = () => {
         return selectedCarts.length > 0
     }
 
+    const handleRemoveCartItem = async (SelectedCart: iUserCart) => {
+        try {
+            await present();
+            const result = await processRemoveCartItemToAPI(SelectedCart);
+            presentToast(result.message, 3000)
+            await refetchUserCart()
+        } catch (err: any) {
+            presentAlert(err.response.data.message ?? err.message)
+        } finally {
+            await dismiss();
+        }
+    }
+
     return (
         <IonPage id="user-cart">
             <IonHeader>
@@ -163,7 +179,7 @@ export const UserCart: React.FC = () => {
                                     { cartGroup.shopProfile.shopName }
                                 </div>
                                 <div>
-                                    <IonButton fill="clear">
+                                    <IonButton fill="clear" onClick={() => handleRemoveCartItem(cartGroup)}>
                                         <IonIcon size="small" slot="icon-only" icon={ trashBin }></IonIcon>
                                     </IonButton>
                                 </div>

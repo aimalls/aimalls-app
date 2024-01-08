@@ -368,3 +368,9 @@ export const getComputedUserCartGroupedBySellerFromAPI = (selectedCart: iUserCar
         .then(response => response.data)
         .catch(err => Promise.reject(err));
 }
+
+export const processRemoveCartItemToAPI = (cart: iUserCart) => {
+    return HTTP_API().post("/user-cart/remove-cart-item", { cart })
+        .then(response => response.data)
+        .catch(err => Promise.reject(err));
+}

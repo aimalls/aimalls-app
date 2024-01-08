@@ -33,7 +33,7 @@ export const UserStore: React.FC = () => {
                         </IonButtons>
                         <IonImg src={aimallsVert} style={{ height: "30px" }} />
                         <IonButtons slot="end">
-                            <IonButton routerLink="/user-store/messages">
+                            <IonButton routerLink="/chat">
                                 <IonIcon icon={ chatboxEllipsesOutline } />
                             </IonButton>
                             <IonButton routerLink="/user-store/notifications">

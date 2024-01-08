@@ -11,7 +11,8 @@ export type tUser = {
 }
 
 export interface iUserContext {
-    user: tUser
+    user: tUser,
+    authToken: string | null
 }
 
 const defaultState = {
@@ -20,7 +21,8 @@ const defaultState = {
         isVerified: false,
         isAdmin: false,
         _id: ''
-    }
+    },
+    authToken: ''
 } as iUserContext
 
 export const UserContext = createContext(defaultState)
@@ -51,7 +53,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     }, [userQuery])
 
     return (
-        <UserContext.Provider value={{user: userQuery.data?.data}}>
+        <UserContext.Provider value={{user: userQuery.data?.data, authToken: localStorage.getItem("authToken")}}>
             { children }
         </UserContext.Provider>
     )

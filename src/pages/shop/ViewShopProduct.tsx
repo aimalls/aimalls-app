@@ -12,13 +12,14 @@ import { A11y, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 // import 'swiper/css/navigation';
 // import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { cartOutline, star, starOutline } from 'ionicons/icons';
+import { cartOutline, chatboxEllipses, star, starOutline } from 'ionicons/icons';
 import { iProduct } from '../../requests/product.request';
 import { getCurrentUserRatingForTheProduct, submitProductRatingToAPI } from '../../requests/product-rating.request';
 import { useCurrentSelectedProductRatingByUser } from '../../hooks/shop/useCurrentSelectedProductRatingByUser';
 import ProductRating from './components/ProductRating';
 import AddToCart from './components/AddToCart';
 import BuyNow from './components/BuyNow';
+import { ChatWithSeller } from './components/ChatWithSeller';
 
 
 interface iProductWithRating extends iProduct {
@@ -68,7 +69,8 @@ const ViewShopProduct: React.FC = () => {
                 <IonGrid>
                     <IonRow className='product-details'>
                         <IonCol size='12' className='product-name'>
-                            { product?.productName }
+                            <div className='name'>{ product?.productName }</div>
+                            <ChatWithSeller receiverId={ product?.user } />
                         </IonCol>
                         <IonCol size='12' className='product-price'>
                             ₱{ product?.priceRange }

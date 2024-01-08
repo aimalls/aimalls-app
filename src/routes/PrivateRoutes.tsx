@@ -22,6 +22,9 @@ import ShopCheckout from "../pages/shop/ShopCheckout"
 import OrderPlaced from "../pages/shop/OrderPlaced"
 import OrderDetail from "../pages/shop/OrderDetail"
 import UserStore from "../pages/user-store/UserStore"
+import SocketContextProvider from "../contexts/SocketContext"
+import Chat from "../pages/chat/Chat"
+import { ChatBox } from "../pages/chat/ChatBox"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
@@ -100,9 +103,19 @@ export const PrivateRoutes = () => {
                 <OrderDetail />
             </Route>
 
+            
             <Route path="/user-store">
                 <UserStore />
             </Route>
+
+            <SocketContextProvider>
+                <Route exact path="/chat">
+                    <Chat />
+                </Route>
+                <Route exact path="/chat/:chatroom/messages">
+                    <ChatBox />
+                </Route>
+            </SocketContextProvider>
 
 
 

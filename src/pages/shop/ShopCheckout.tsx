@@ -54,6 +54,7 @@ export const ShopCheckout: React.FC = () => {
         }
     }
 
+    
     return (
         <IonPage id="shop-checkout">
             <IonHeader>
