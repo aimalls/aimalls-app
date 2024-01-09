@@ -6,6 +6,9 @@ import { useParams } from 'react-router';
 import { useChatMessages } from "../../hooks/chat/useChatMessages";
 import { iChatMessage, iChatUser } from "../../requests/chat.request";
 import { UserContext } from "../../contexts/UserContext";
+import { Socket, io } from "socket.io-client";
+
+let socket: Socket;
 
 interface iMessage {
   _id: string;
@@ -54,7 +57,6 @@ interface Accountprofile {
 
 export const ChatBox: React.FC = () => {
 
-    const socket = useContext(SocketContext);
     const user = useContext(UserContext)
 
     const { chatroom } = useParams<{ chatroom: string }>();
@@ -107,9 +109,10 @@ export const ChatBox: React.FC = () => {
     
 
     useEffect(() => {
-        
-        // socket.on("connect", () => {
-        //     console.log("connected")
+        socket = io(import.meta.env.VITE_SOCKET_URL, { extraHeaders: { Authorization: "Bearer " + localStorage.getItem("authToken") || "" }  });
+        socket.on("connect", () => {
+            console.log("connected")
+        })
         socket.emit("join-chat-room", {chatroom});
 
         socket.on("chat-message", (message: any) => {
@@ -120,7 +123,7 @@ export const ChatBox: React.FC = () => {
             setSocketMessages((prev) => [...prev, message])
         })
 
-        // })
+        
 
         
 

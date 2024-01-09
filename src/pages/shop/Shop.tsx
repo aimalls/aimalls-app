@@ -91,7 +91,7 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
                         <IonTabButton tab="shop" href="/shop">
                             <IonIcon icon={ home }></IonIcon>
                         </IonTabButton>
-                        <IonTabButton tab="wishlist">
+                        <IonTabButton tab="liked-products" onClick={() => navigation.push("/shop/liked-products")}>
                             <IonIcon icon={ heart }></IonIcon>
                         </IonTabButton>
                         <IonTabButton tab="scan">

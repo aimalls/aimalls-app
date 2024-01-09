@@ -18,6 +18,8 @@ export const Login: FC<iProps> = (props): JSX.Element => {
 
     const navigation = useHistory();
 
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
     const [loginForm, setLoginForm] = useState<iLoginForm>({
         email: '',
         password: '',
@@ -79,9 +81,11 @@ export const Login: FC<iProps> = (props): JSX.Element => {
                                 label="Password"
                                 fill="solid"
                                 labelPlacement="floating"
+                                className="password-input"
                                 value={loginForm.password}
                                 onIonInput={(e) => handleLoginFormChange("password", e.detail.value!)}
                             >
+                                
                             </IonInput>
                         </IonCol>
                         <IonCol size="12" style={{ display: 'flex', justifyContent: 'end' }}>

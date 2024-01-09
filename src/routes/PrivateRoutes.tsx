@@ -25,6 +25,7 @@ import UserStore from "../pages/user-store/UserStore"
 import SocketContextProvider from "../contexts/SocketContext"
 import Chat from "../pages/chat/Chat"
 import { ChatBox } from "../pages/chat/ChatBox"
+import { LikedProducts } from "../pages/liked-products/LikedProducts"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
@@ -101,6 +102,10 @@ export const PrivateRoutes = () => {
             </Route>
             <Route exact path="/shop/order/:order_id/order-detail">
                 <OrderDetail />
+            </Route>
+
+            <Route path="/shop/liked-products">
+                <LikedProducts />
             </Route>
 
             

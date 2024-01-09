@@ -20,6 +20,7 @@ import ProductRating from './components/ProductRating';
 import AddToCart from './components/AddToCart';
 import BuyNow from './components/BuyNow';
 import { ChatWithSeller } from './components/ChatWithSeller';
+import { LikedProductButton } from './components/LikeProduct';
 
 
 interface iProductWithRating extends iProduct {
@@ -70,7 +71,10 @@ const ViewShopProduct: React.FC = () => {
                     <IonRow className='product-details'>
                         <IonCol size='12' className='product-name'>
                             <div className='name'>{ product?.productName }</div>
-                            <ChatWithSeller receiverId={ product?.user } />
+                            <div className="product-interact-buttons">
+                                <LikedProductButton product={product} />
+                                <ChatWithSeller receiverId={ product?.user } />
+                            </div>
                         </IonCol>
                         <IonCol size='12' className='product-price'>
                             ₱{ product?.priceRange }
