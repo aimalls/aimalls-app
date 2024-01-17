@@ -8,6 +8,8 @@ import { iAppSetting } from "../requests/app-setting.request";
 import MaintenanceModeDialog from "../components/MaintenanceModeDialog";
 import { useAppSetting } from "../hooks/splash-screen/useAppSetting";
 
+
+
 export const SplashScreen: FC = () => {
 
     const navigation = useHistory();
@@ -18,10 +20,12 @@ export const SplashScreen: FC = () => {
 
     const [isMaintenanceModeStatus, setIsMaintenanceModeStatus] = useState<boolean>(false)
 
+    
+
     useEffect(() => {
         if (AppSettings) {
             const isMaintenanceMode: iAppSetting = AppSettings.find((v: iAppSetting) => v.name == 'isMaintenanceMode');
-
+            
             if (isMaintenanceMode) {
                 if (isMaintenanceMode.value == true) {
                     setIsMaintenanceModeStatus(true)
@@ -35,6 +39,7 @@ export const SplashScreen: FC = () => {
                     navigation.push("/shop")
                 }, 3000)
             }
+            
         }
         
     }, [AppSettings])

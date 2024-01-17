@@ -1,4 +1,28 @@
 #user-store-home {
+    .user-balance {
+        ion-card {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            .peso-balance {
+                .value {
+                    font-weight: bold;
+                    font-size: 1.5rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+                .label {
+                    font-size: .8rem;
+                }
+            }
+            .action-buttons {
+                display: flex;
+                justify-content: flex-end;
+            }
+        }
+    }
     .store-transactions, .store-products {
         .transactions, .products {
             display: flex;

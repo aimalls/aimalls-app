@@ -24,16 +24,28 @@ import './theme/variables.scss';
 import "./theme/globals.scss"
 import { Routes } from './routes';
 
+
+import { useEffect } from 'react';
+
+import OneSignal from 'onesignal-cordova-plugin';
+
 setupIonicReact();
 
-const App: React.FC = () => (
-    <IonApp>
-        <IonReactRouter>
-            <IonRouterOutlet>
-                <Routes />
-            </IonRouterOutlet>
-        </IonReactRouter>
-    </IonApp>
-);
+const App: React.FC = () => {
+
+    
+    
+
+
+    return (
+        <IonApp>
+            <IonReactRouter>
+                <IonRouterOutlet>
+                    <Routes />
+                </IonRouterOutlet>
+            </IonReactRouter>
+        </IonApp>
+    );
+}
 
 export default App;

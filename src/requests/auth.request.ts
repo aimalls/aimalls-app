@@ -13,6 +13,30 @@ export interface iLoginForm {
     password: string
 }
 
+
+export interface iUserInfo {
+  _id: string;
+  email: string;
+  isAdmin: boolean;
+  isVerified: boolean;
+  verificationLink: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+  deactivated: boolean;
+  roles: string[];
+  balances: Balance[];
+  accountName: string;
+  id: string;
+}
+
+interface Balance {
+  _id: string;
+  currency: string;
+  amount: number;
+  id: string;
+}
+
 export const processLegacyRegistrationToAPI = async (registrationForm: iRegistrationForm) => {
     try {
         return await HTTP_API().post("/auth/register", registrationForm)
@@ -31,7 +55,9 @@ export const processLoginToAPI = async (email: string, password: string) => {
 
 export const getUserInfo = async () => {
     try {
-        return await HTTP_API().get("/auth/me")
+        return HTTP_API().get<Promise<iUserInfo>>("/auth/me")
+            .then(res => res.data)
+            .catch(err => Promise.reject(err))
     } catch (error) {
         return Promise.reject(error)
     }

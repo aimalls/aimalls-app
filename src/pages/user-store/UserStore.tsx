@@ -9,7 +9,7 @@ import { Redirect, Route, useHistory } from "react-router";
 import UserStoreHome from "./UserStoreHome";
 import StoreAnalytics from "./StoreAnalytics";
 import StoreMessages from "./StoreMessages";
-import StoreNotifications from "./StoreNotifications";
+import UserNotifications from "./UserNotifications";
 import { ProductsV2 } from "../products/ProductsV2";
 import { DelistedProducts } from "../products/DelistedProducts";
 import { InReviewProducts } from "../products/InReviewProducts";
@@ -36,7 +36,7 @@ export const UserStore: React.FC = () => {
                             <IonButton routerLink="/chat">
                                 <IonIcon icon={ chatboxEllipsesOutline } />
                             </IonButton>
-                            <IonButton routerLink="/user-store/notifications">
+                            <IonButton routerLink="/notifications">
                                 <IonIcon icon={ notificationsOutline } />
                             </IonButton>
                         </IonButtons>
@@ -54,7 +54,6 @@ export const UserStore: React.FC = () => {
                         </Route>
                         <Route path="/user-store/orders" render={() => <StoreOrders />} />
                         <Route path="/user-store/messages" render={() => <StoreMessages />} exact={true} />
-                        <Route path="/user-store/notifications" render={() => <StoreNotifications />} exact={true} />
 
                         
                         {/* <Route path="/user-store/reviewing" render={() => <InReviewProducts />} exact={true} />

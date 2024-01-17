@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useContext, useEffect } from "react";
 import { IonButton, IonCol, IonContent, IonGrid, IonPage, IonRow, useIonAlert, useIonLoading, IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonSearchbar, IonIcon, useIonToast, IonFooter, IonTabBar, IonTabButton, IonCard, IonImg, IonCardSubtitle, IonCardContent, IonMenuButton, IonSplitPane, IonRefresher, RefresherEventDetail, IonRefresherContent } from "@ionic/react";
 import { useHistory, useParams } from "react-router";
 import "../../styles/v1/pages/shop/Shop.scss"
@@ -7,16 +7,41 @@ import { useProductSearch } from "../../hooks/product/useProductSearch";
 import aimallsVert from "../../assets/images/aimalls-vert.png"
 import { Sidebar } from "./Sidebar";
 import ShopProductListCard from "./components/ShopProductListCard";
+import {UserContext} from "../../contexts/UserContext";
+import OneSignal, { PushSubscriptionChangedState } from "onesignal-cordova-plugin";
 export interface iProps {}
 export const Shop: FC<iProps> = (props): JSX.Element => {
     const navigation = useHistory();
 
     const [presentToast] = useIonToast();
 
+    const user = useContext(UserContext)
+
 
     const handleCameraSearch = async () => {
         await presentToast("Smart scan is not yet available!", 3000)
     }
+
+
+
+    const oneSignalInit = async () => {
+        
+        OneSignal.initialize("868353a3-e592-4556-9d5e-82ce4bef66b6")
+        if (user.user) {
+            OneSignal.login(user.user._id)
+
+        }
+
+
+        OneSignal.Notifications.requestPermission(true).then((accepted: boolean) => {
+            console.log("User accepted notifications: " + accepted);
+        });
+        
+    }
+
+    useEffect(() => {
+        oneSignalInit();
+    }, [user]);
 
     const { search_string }: { search_string: string } = useParams();
     
@@ -56,7 +81,6 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
                     </IonToolbar>
                     <IonToolbar>
                         <div className="search-btn" onClick={() => handleSearchButton()}>
-
                             <IonIcon icon={ searchOutline }></IonIcon>
                             <div>{ !!search_string ? search_string : "Product Search" }</div>
                             <IonButton fill="clear" color={"dark"} className="ion-no-padding" onClick={() => handleCameraSearch()}>
@@ -97,7 +121,7 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
                         <IonTabButton tab="scan">
                             <IonIcon icon={ scan }></IonIcon>
                         </IonTabButton>
-                        <IonTabButton tab="notifications">
+                        <IonTabButton tab="notifications" onClick={() => navigation.push("/notifications")}>
                             <IonIcon icon={ notifications }></IonIcon>
                         </IonTabButton>
                         <IonTabButton tab="profile" onClick={() => navigation.push("/account-settings/profile")} >

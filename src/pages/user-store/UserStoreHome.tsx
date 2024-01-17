@@ -1,8 +1,11 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonRow } from "@ionic/react";
+import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonRow } from "@ionic/react";
 import "../../styles/v1/pages/user-store/UserStoreHome.scss"
 import { useShopProfile } from "../../hooks/shop-profile/useShopProfile";
 import useStoreOrder from "../../hooks/order/useStoreOrder";
 import { useUserProduct } from "../../hooks/product/useUserProduct";
+import { useContext, useMemo, useState } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { eye, eyeOff } from "ionicons/icons";
 export const UserStoreHome: React.FC = () => {
 
     const { ShopProfile, ShopProfileIsLoading } = useShopProfile();
@@ -14,6 +17,27 @@ export const UserStoreHome: React.FC = () => {
         completed,
         cancelled } = useStoreOrder();
 
+    const {user} = useContext(UserContext)
+
+    const currencyFormatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'PHP',
+    });
+
+    const pesoBalance = useMemo(() => {
+
+        if (user) {
+            return currencyFormatter.format(user.balances.find(balance => balance.currency == "PHP")?.amount ?? 0);
+        }
+        return currencyFormatter.format(0)
+    }, [user])
+
+    const hiddenBalance = () => {
+        return pesoBalance.replace(/\d/g, "*");
+    }
+
+    const [isBalanceHidden, setIsBalanceHidden] = useState(false);
+
     const { userProductsCount, isUserProductsCountLoading, refetchUserProductsCount } = useUserProduct();
 
     return (
@@ -23,6 +47,24 @@ export const UserStoreHome: React.FC = () => {
                         <IonRow>
                             <IonCol size="12">
                                 <h1>{ ShopProfile.shopName } Store</h1>
+                            </IonCol>
+                            <IonCol size="12" className="user-balance">
+                                <IonCard>
+                                    <div className="peso-balance">
+                                        <div className="value">
+                                            <div>{ isBalanceHidden ? hiddenBalance() : pesoBalance }</div>
+                                            <IonButton fill="clear" onClick={() => setIsBalanceHidden(v => v = !v)}>
+                                                <IonIcon icon={ isBalanceHidden ? eyeOff : eye } slot="icon-only"></IonIcon>
+                                            </IonButton>
+                                        </div>
+                                        <div className="label">
+                                            Wallet Balance
+                                        </div>
+                                    </div>
+                                    <div className="action-buttons">
+                                        <IonButton routerLink="/transactions">Transactions</IonButton>
+                                    </div>
+                                </IonCard>
                             </IonCol>
                             <IonCol size="12" className="store-transactions">
                                 <IonCard>

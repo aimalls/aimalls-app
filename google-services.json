@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "510718203654",
+    "project_id": "aimalls",
+    "storage_bucket": "aimalls.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:510718203654:android:9776e6ff979dcbe0587087",
+        "android_client_info": {
+          "package_name": "app.aimalls.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "510718203654-kuv7tnmas8r7nqne8ov11jkgfluk210b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABTNdBmcPPaODcNNwoTc6vcatXUaY8WXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "510718203654-kuv7tnmas8r7nqne8ov11jkgfluk210b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

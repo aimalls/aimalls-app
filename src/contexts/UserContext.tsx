@@ -1,6 +1,7 @@
 import React, { createContext, ReactNode, useEffect } from "react"
 import { useHistory } from "react-router"
 import { useUser } from "../hooks/auth/useUser"
+import { iUserInfo } from "../requests/auth.request"
 
 export type tUser = {
     _id: string
@@ -11,7 +12,7 @@ export type tUser = {
 }
 
 export interface iUserContext {
-    user: tUser,
+    user: iUserInfo,
     authToken: string | null
 }
 
@@ -53,7 +54,7 @@ export const UserContextProvider = ({ children }: UserContextProviderProps) => {
     }, [userQuery])
 
     return (
-        <UserContext.Provider value={{user: userQuery.data?.data, authToken: localStorage.getItem("authToken")}}>
+        <UserContext.Provider value={{user: userQuery.data!, authToken: localStorage.getItem("authToken")}}>
             { children }
         </UserContext.Provider>
     )

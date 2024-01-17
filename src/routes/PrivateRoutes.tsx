@@ -26,6 +26,8 @@ import SocketContextProvider from "../contexts/SocketContext"
 import Chat from "../pages/chat/Chat"
 import { ChatBox } from "../pages/chat/ChatBox"
 import { LikedProducts } from "../pages/liked-products/LikedProducts"
+import UserNotifications from "../pages/user-store/UserNotifications"
+import Transaction from "../pages/transaction/Transaction"
 // import { ProductPageLayout } from "../layouts/product/ProductPageLayout"
 
 export const PrivateRoutes = () => {
@@ -121,6 +123,14 @@ export const PrivateRoutes = () => {
                     <ChatBox />
                 </Route>
             </SocketContextProvider>
+
+            <Route exact path="/notifications">
+                <UserNotifications />
+            </Route>
+
+            <Route exact path="/transactions">
+                <Transaction />
+            </Route>
 
 
 
