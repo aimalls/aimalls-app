@@ -8,7 +8,8 @@ import aimallsVert from "../../assets/images/aimalls-vert.png"
 import { Sidebar } from "./Sidebar";
 import ShopProductListCard from "./components/ShopProductListCard";
 import {UserContext} from "../../contexts/UserContext";
-import OneSignal, { PushSubscriptionChangedState } from "onesignal-cordova-plugin";
+import { OneSignalContext } from "../../contexts/OneSignalContext";
+
 export interface iProps {}
 export const Shop: FC<iProps> = (props): JSX.Element => {
     const navigation = useHistory();
@@ -22,20 +23,13 @@ export const Shop: FC<iProps> = (props): JSX.Element => {
         await presentToast("Smart scan is not yet available!", 3000)
     }
 
+    const OneSignal = useContext(OneSignalContext);
 
 
     const oneSignalInit = async () => {
-        
-        OneSignal.initialize("868353a3-e592-4556-9d5e-82ce4bef66b6")
         if (user.user) {
             OneSignal.login(user.user._id)
-
         }
-
-
-        OneSignal.Notifications.requestPermission(true).then((accepted: boolean) => {
-            console.log("User accepted notifications: " + accepted);
-        });
         
     }
 

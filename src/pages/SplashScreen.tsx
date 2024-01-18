@@ -1,5 +1,5 @@
 import { IonBackButton, IonButton, IonContent, IonHeader, IonLabel, IonPage, IonToolbar } from "@ionic/react";
-import { FC, useEffect, useState } from "react";
+import { FC, useContext, useEffect, useState } from "react";
 import "../styles/v1/pages/SplashScreen.scss"
 import AIMallsLogo from "../assets/images/logo.png"
 import { useHistory } from "react-router";
@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { iAppSetting } from "../requests/app-setting.request";
 import MaintenanceModeDialog from "../components/MaintenanceModeDialog";
 import { useAppSetting } from "../hooks/splash-screen/useAppSetting";
+import { OneSignalContext } from "../contexts/OneSignalContext";
 
 
 
@@ -20,6 +21,7 @@ export const SplashScreen: FC = () => {
 
     const [isMaintenanceModeStatus, setIsMaintenanceModeStatus] = useState<boolean>(false)
 
+    const OneSignal = useContext(OneSignalContext);
     
 
     useEffect(() => {
@@ -41,8 +43,8 @@ export const SplashScreen: FC = () => {
             }
             
         }
-        
     }, [AppSettings])
+
 
     return  (
         <IonPage id="splash-screen">

@@ -22,6 +22,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    signingConfigs {
+        debug {
+            storeFile file("../../../../aimalls/aimalls-dev.keystore")
+            storePassword 'g12a14352'
+            keyAlias 'aimalls-dev'
+            keyPassword 'g12a14352'
+        }
+    }
 }
 
 repositories {

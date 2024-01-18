@@ -27,24 +27,27 @@ import { Routes } from './routes';
 
 import { useEffect } from 'react';
 
-import OneSignal from 'onesignal-cordova-plugin';
+import OneSignalContextProvider from './contexts/OneSignalContext';
+import AppUrlListener from './components/AppURLListener';
 
 setupIonicReact();
 
 const App: React.FC = () => {
 
-    
-    
+
 
 
     return (
-        <IonApp>
-            <IonReactRouter>
-                <IonRouterOutlet>
-                    <Routes />
-                </IonRouterOutlet>
-            </IonReactRouter>
-        </IonApp>
+        <OneSignalContextProvider>
+            <IonApp>
+                <IonReactRouter>
+                    <AppUrlListener />
+                    <IonRouterOutlet>
+                        <Routes />
+                    </IonRouterOutlet>
+                </IonReactRouter>
+            </IonApp>
+        </OneSignalContextProvider>
     );
 }
 

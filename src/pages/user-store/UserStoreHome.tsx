@@ -136,7 +136,13 @@ export const UserStoreHome: React.FC = () => {
                             </IonCol>
                         </IonRow>
 
-                    ): null }
+                    ): (
+                        <IonRow>
+                            <IonCol size="12">
+                                <IonButton expand="block" routerLink="/account-settings/shop-profile">Setup Store</IonButton>
+                            </IonCol>
+                        </IonRow>
+                    ) }
             </IonGrid>
             </IonContent>
     )
